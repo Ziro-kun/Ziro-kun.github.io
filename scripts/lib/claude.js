@@ -11,7 +11,7 @@ export async function askClaude(prompt, { maxTokens = 4000, temperature = 0.8 } 
   });
 
   let text = message.content[0].text;
-  // 마크다운 코드펜스 제거
-  text = text.replace(/^```(?:markdown|md)?\n?/i, "").replace(/\n?```$/i, "");
+  // 마크다운 코드펜스 제거 (```yaml, ```markdown, ```md 등 모두 처리)
+  text = text.replace(/^```[a-z]*\n?/i, "").replace(/\n?```$/i, "");
   return text.trim();
 }
