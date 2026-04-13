@@ -11,7 +11,12 @@ export async function askClaude(prompt, { maxTokens = 4000, temperature = 0.8 } 
   });
 
   let text = message.content[0].text;
-  // 마크다운 코드펜스 제거 (```yaml, ```markdown, ```md 등 모두 처리)
-  text = text.replace(/^```[a-z]*\n?/i, "").replace(/\n?```$/i, "");
+  // frontmatter 시작(---)이전의 모든 내용 제거 (코드펜스, 설명문 등)
+  const frontmatterStart = text.indexOf("---");
+  if (frontmatterStart > 0) {
+    text = text.slice(frontmatterStart);
+  }
+  // 닫는 코드펜스 제거
+  text = text.replace(/\n?```\s*$/i, "");
   return text.trim();
 }
