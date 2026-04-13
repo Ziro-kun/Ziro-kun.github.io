@@ -21,8 +21,17 @@ export async function generateAndSavePost(userPrompt, styleGuide = "") {
     ? `다음 글쓰기 스타일을 따라주세요:\n\n${styleGuide}\n\n`
     : "";
 
+  const today = getToday();
   const fullPrompt = `${systemPrompt}아래 내용을 바탕으로 블로그 포스트를 작성해주세요.
-반드시 YAML frontmatter로 시작해야 합니다 (title, description, pubDate, tags 포함).
+반드시 아래 형식의 YAML frontmatter로 시작해야 합니다. 코드펜스(\`\`\`)로 감싸지 말고 --- 로 바로 시작하세요.
+pubDate는 반드시 따옴표로 감싼 문자열이어야 합니다.
+
+---
+title: "제목"
+description: "한 줄 요약"
+pubDate: "${today}"
+tags: ["태그1", "태그2"]
+---
 
 ${userPrompt}`;
 
