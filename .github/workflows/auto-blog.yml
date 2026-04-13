@@ -11,10 +11,15 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  generate:
+  generate-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -32,3 +37,9 @@ jobs:
           git diff --staged --quiet && echo "변경사항 없음, 스킵" && exit 0
           git commit -m "auto: generate blog post from input.txt"
           git push
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+      - id: deployment
+        uses: actions/deploy-pages@v4
