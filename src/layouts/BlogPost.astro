@@ -16,41 +16,67 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<BaseHead title={title} description={description} />
 		<style>
 			main {
-				width: calc(100% - 2em);
 				max-width: 100%;
 				margin: 0;
+				padding: 0;
 			}
 			.hero-image {
 				width: 100%;
+				margin-bottom: 3rem;
+				background: #18181b;
 			}
 			.hero-image img {
 				display: block;
 				margin: 0 auto;
-				border-radius: 12px;
-				box-shadow: var(--box-shadow);
+				max-height: 600px;
+				object-fit: cover;
+				border-radius: 0 0 24px 24px;
+				box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 			}
 			.prose {
-				width: 720px;
+				width: 800px;
 				max-width: calc(100% - 2em);
 				margin: auto;
 				padding: 1em;
-				color: rgb(var(--gray-dark));
+				color: rgb(var(--white));
 			}
 			.title {
-				margin-bottom: 1em;
-				padding: 1em 0;
+				margin-bottom: 4rem;
 				text-align: center;
-				line-height: 1;
+				line-height: 1.2;
 			}
 			.title h1 {
-				margin: 0 0 0.5em 0;
+				margin: 0 0 1rem 0;
+				font-size: 3.5rem;
+				font-weight: 800;
+				background: linear-gradient(to bottom, #fff, #a1a1aa);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
 			}
 			.date {
-				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
+				margin-bottom: 1.5rem;
+				color: var(--accent);
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				font-size: 0.9rem;
 			}
 			.last-updated-on {
 				font-style: italic;
+				color: rgb(var(--gray));
+			}
+			hr {
+				border-top: 1px solid #27272a;
+				margin: 3rem 0;
+			}
+			
+			@media (max-width: 720px) {
+				.title h1 {
+					font-size: 2.5rem;
+				}
+				.hero-image img {
+					border-radius: 0;
+				}
 			}
 		</style>
 	</head>
@@ -75,7 +101,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 							}
 						</div>
 						<h1>{title}</h1>
-						<hr />
 					</div>
 					<slot />
 				</div>
