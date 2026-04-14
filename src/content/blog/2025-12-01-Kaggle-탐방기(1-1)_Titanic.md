@@ -170,7 +170,8 @@ df.head() #데이터의 첫 5행 출력
 df.columns
 ```
 명령어로 추출합니다. 그러면
-![](https://velog.velcdn.com/images/applez/post/23a9a875-9ac4-4d29-9e28-a2cae7cfa764/image.png)이런 결과값이 출력됩니다. 컬럼명들과 함께 컬럼명 타입이 'object'라는 것까지 확인됩니다. 컬럼들이 모두 문자타입이군요.
+![](https://velog.velcdn.com/images/applez/post/23a9a875-9ac4-4d29-9e28-a2cae7cfa764/image.png)
+~~_이런 결과값이 출력됩니다. 컬럼명들과 함께 컬럼명 타입이 'object'라는 것까지 확인됩니다. 컬럼들이 모두 문자타입이군요._~~
 
 각 컬럼별 설명은 다음과 같습니다.
 
@@ -210,7 +211,8 @@ df.shape
 df.nunique(axis=0, dropna=False)
 ```
 여기서 굳이 `axis=0`을 붙인 이유는 각 열의 모든 행에 동작하게 하기 위함이고, `NaN` 혹은 `Null`, `N/A` 등의 결측치가 존재한다면 무시하지 않고 포함하겠다는 의미입니다.
-![](https://velog.velcdn.com/images/applez/post/d17edd9f-750d-4992-bb1a-48b0b48c1b66/image.png)결과는 이렇게 출력되는군요. 확실히 범주형/순서형 데이터들은 상대적으로 낮은 수치를 보입니다.
+![](https://velog.velcdn.com/images/applez/post/d17edd9f-750d-4992-bb1a-48b0b48c1b66/image.png)
+~~_결과는 이렇게 출력되는군요. 확실히 범주형/순서형 데이터들은 상대적으로 낮은 수치를 보입니다._~~
 
 여기까지가 데이터 확인 과정이었습니다. 이제 데이터 전처리 과정으로 넘어가 보겠습니다.
 
@@ -222,27 +224,31 @@ df.nunique(axis=0, dropna=False)
 df.duplicated(subset=None, keep='first')
 ```
 지금 이 코드는 열 단위로 중복을 체크하면서 행 전체를 확인하는 과정입니다. 
-![](https://velog.velcdn.com/images/applez/post/0ce21df8-ea36-4d43-ad2d-62c47bd34a22/image.png)음.. 이렇게 봐서는 어느 행에(혹은 열에) 중복값이 있는지 한 눈에 들어오지 않는군요. 하지만 이렇게 하는 이유는 중복되는 행이 여러 개 있을 경우 '첫 번째 행만 `True`가 아니고 → 나머지 중복되는 행들이 `True`가 된다'는 원리를 이용한 것입니다. 그러니 일단 없다고 봐야겠네요.
+![](https://velog.velcdn.com/images/applez/post/0ce21df8-ea36-4d43-ad2d-62c47bd34a22/image.png)
+~~_음.. 이렇게 봐서는 어느 행에(혹은 열에) 중복값이 있는지 한 눈에 들어오지 않는군요. 하지만 이렇게 하는 이유는 중복되는 행이 여러 개 있을 경우 '첫 번째 행만 `True`가 아니고 → 나머지 중복되는 행들이 `True`가 된다'는 원리를 이용한 것입니다. 그러니 일단 없다고 봐야겠네요._~~
 
 다른 방법으로는 람다`lambda`함수를 활용해서 컬럼별 중복값의 합을 계산하는 방법도 있습니다. 
 ```python
 df.apply(lambda col: col.duplicated().sum())
 ```
 코드를 실행시켜보니 아래와 같은 결과가 나옵니다.
-![](https://velog.velcdn.com/images/applez/post/93021e71-c5aa-47ce-a330-073e92e7df79/image.png) 아마 승객ID는 각각 고유의 값이니 중복값이 없을거고, 이름도 마찬가지일 겁니다. 생존여부는 생존/사망 중 하나이므로 중복값이 있는게 당연할테고, 아마 객실등급, 성별, 나이 등의 다른 숫자 혹은 순서형 데이터들도 마찬가지겠죠?
+![](https://velog.velcdn.com/images/applez/post/93021e71-c5aa-47ce-a330-073e92e7df79/image.png)
+~~_아마 승객ID는 각각 고유의 값이니 중복값이 없을거고, 이름도 마찬가지일 겁니다. 생존여부는 생존/사망 중 하나이므로 중복값이 있는게 당연할테고, 아마 객실등급, 성별, 나이 등의 다른 숫자 혹은 순서형 데이터들도 마찬가지겠죠?_~~
 
 그럼 이제 결측치로 넘어가보겠습니다. 결측치 확인 메써드는 `isna()`, `isnull()`, `isnan()` 등 끌리는 대로 쓰시면 됩니다. 저는 `isna`가 맘에 들어서(1자라도 짧아서) `isna`를 쓰고 있습니다.😅
 ```python
 df.isna()
 ```
 실행을 시켜보면,
-![](https://velog.velcdn.com/images/applez/post/dbc9bfd4-91f3-4000-9a2e-0fa4c9eab885/image.png) 역시나 모르겠습니다. 대충 보니 Cabin쪽에 `True`가 간간히 보이긴 하는데, 다른 열엔.. 정말 없을까요?
+![](https://velog.velcdn.com/images/applez/post/dbc9bfd4-91f3-4000-9a2e-0fa4c9eab885/image.png)
+~~_역시나 모르겠습니다. 대충 보니 Cabin쪽에 `True`가 간간히 보이긴 하는데, 다른 열엔.. 정말 없을까요?_~~
 다행히 결측치는 중복값보다 훨씬 간단하게 열별로 확인할 수 있는 방법이 있습니다.
 ```python
 df.isna().sum()
 ```
 뒤에 `.sum()`만 붙여주시면 됩니다. 합계를 알고싶다는 메써드지요. 지금같은 형태는 체인처럼 결합해서 쓴다 하여 메써드 체이닝(method chaining)이라고 합니다. 
-![](https://velog.velcdn.com/images/applez/post/2c71daab-f865-4b10-a43f-fdb51980519b/image.png)아주 깔끔하게 열별 결측치를 확인할 수 있습니다.
+![](https://velog.velcdn.com/images/applez/post/2c71daab-f865-4b10-a43f-fdb51980519b/image.png)
+~~_아주 깔끔하게 열별 결측치를 확인할 수 있습니다._~~
 
 특정 열만 보고싶으면 아래와 같이 쓰면 되긴 합니다. `print`를 붙인 이유는 Jupyter Notebook 에서 `print`를 안붙이고 두 줄을 실행시킬 경우 먼저 실행시킨 코드가 씹히는 경우가 있어서 입니다.
 ```python
@@ -257,7 +263,8 @@ print(df['Cabin'].isna().sum())
 ```python
 df.describe()
 ```
-![](https://velog.velcdn.com/images/applez/post/91c0a516-a999-4550-add1-e35a5e2488f9/image.png)위에서부터 count는 데이터의 갯수이고, mean은 해당 열 데이터의 평균값, std는 아마 표준편차일겁니다. min은 최소값, max는 최대값이고 25%, 50%, 75%는 정규분포에서 상위 25, 50, 75%에 분포하는 값들입니다. 
+![](https://velog.velcdn.com/images/applez/post/91c0a516-a999-4550-add1-e35a5e2488f9/image.png)
+~~_위에서부터 count는 데이터의 갯수이고, mean은 해당 열 데이터의 평균값, std는 아마 표준편차일겁니다. min은 최소값, max는 최대값이고 25%, 50%, 75%는 정규분포에서 상위 25, 50, 75%에 분포하는 값들입니다._~~
 
 결측치 대체를 하는데 왜 갑자기 쌩뚱맞게 통계를? 이라는 의문이 생길 수 있습니다. 
 
