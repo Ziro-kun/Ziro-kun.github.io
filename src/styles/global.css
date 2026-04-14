@@ -55,6 +55,13 @@ h4 {
 h5 {
 	font-size: 1.25em;
 }
+h6 {
+	font-size: 0.8em;
+	font-weight: 400;
+	color: rgb(var(--gray));
+	margin: -0.25rem 0 1rem 0;
+	font-style: italic;
+}
 strong,
 b {
 	font-weight: 700;
