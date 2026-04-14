@@ -16,7 +16,7 @@ thumbnail: "https://velog.velcdn.com/images/applez/post/132c7b0c-4e9c-42ec-9a31-
 
 ![](https://velog.velcdn.com/images/applez/post/132c7b0c-4e9c-42ec-9a31-9f41379e3c2d/image.png)
 
-?????????
+~~_?????????_~~
 
 
 ---
@@ -33,7 +33,7 @@ thumbnail: "https://velog.velcdn.com/images/applez/post/132c7b0c-4e9c-42ec-9a31-
 
 ![](https://velog.velcdn.com/images/applez/post/ea7c470c-1b69-4e17-a36a-1dc3dce9e3ab/image.jpg)
 
-(이미지 출처 : https://www.cheonyu.com/product/view.html?qIDX=47022)
+~~_(이미지 출처 : https://www.cheonyu.com/product/view.html?qIDX=47022)_~~
 
 ```python
 import cv2              # OpenCV 라이브러리 가져오기
@@ -119,7 +119,7 @@ plt.show()
 
 ![](https://velog.velcdn.com/images/applez/post/4244cf68-f85a-486b-a65f-92c91478d188/image.png)
 
-뭔가 좀 엉성하긴 한데 생각보다 훌륭하게 알아서 잘 구분을 지었네요.
+~~_뭔가 좀 엉성하긴 한데 생각보다 훌륭하게 알아서 잘 구분을 지었네요._~~
 
 # 3. 색깔 비율 판별하기
 

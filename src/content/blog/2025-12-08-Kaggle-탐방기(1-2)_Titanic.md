@@ -405,7 +405,7 @@ final_model = Pipeline(steps=[
 final_model.fit(X, y)
 ```
 ![](https://velog.velcdn.com/images/applez/post/b5ec7d47-e52f-47d8-8301-53ded91161fb/image.png)
-다음과 같은 화면이 나옵니다. 물론 배경지식 없이 처음에 보면 당황스럽습니다.
+~~_다음과 같은 화면이 나옵니다. 물론 배경지식 없이 처음에 보면 당황스럽습니다._~~
 
 제가 사용한 Pipeline은 전처리 과정과 모델 학습을 하나로 묶어둔 구조입니다. 먼저 전처리 단계에서는 수치형 변수들은 `StandardScaler`로 정규화하고, 범주형 변수들은 `OneHotEncoder`로 변환해 변수 타입에 맞는 처리를 자동으로 적용하도록 구성했습니다. 이렇게 하면 모델마다 따로 전처리를 반복하지 않아도 되고, 교차검증을 할 때도 동일한 흐름을 그대로 유지할 수 있다는 장점이 있습니다.
 
