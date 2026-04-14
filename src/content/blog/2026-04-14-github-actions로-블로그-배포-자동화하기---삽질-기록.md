@@ -3,7 +3,7 @@ title: "GitHub Actions로 블로그 배포 자동화하기 - 삽질 기록"
 description: "GitHub Actions를 이용해 블로그 배포를 자동화한 과정과 마주친 문제들을 정리했습니다."
 pubDate: "2026-04-14"
 tags: ["GitHub Actions", "CI/CD", "자동화", "블로그"]
-category: "AI 탐구"
+category: "explore"
 ---
 
 드디어 해냈다. GitHub Actions로 블로그 배포 자동화를 완료했다. 생각보다 복잡했고 삽질도 많았지만, 이제 코드를 푸시하면 자동으로 배포되는 쾌감을 맛봤다.

@@ -3,7 +3,7 @@ title: "ChatGPT와의 수다(3)_LLM 대화 기록, 누구의 것일까?"
 description: "ChatGPT와 함께 나누는 HAI(Human-AI Interaction) 대화입니다."
 pubDate: "2025-12-03"
 tags: ["AI", "HAI", "LLM", "chatGPT", "dialog", "generativeAI", "디지털인권", "생성형AI", "인공지능윤리", "저작권", "프라이버시"]
-category: "AI 탐구"
+category: "explore"
 ---
 
 # LLM 서비스와의 대화 기록, 누구의 것일까? — 인공지능 윤리와 디지털 인권, 그리고 저작권

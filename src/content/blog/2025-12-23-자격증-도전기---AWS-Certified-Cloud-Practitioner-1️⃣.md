@@ -3,7 +3,7 @@ title: "자격증 도전기 - AWS Certified Cloud Practitioner 1️⃣"
 description: "AI 미생의 IT 자격증 도전기입니다."
 pubDate: "2025-12-23"
 tags: ["aws", "certification", "cloud", "자격증", "클라우드"]
-category: "자기개발"
+category: "growth"
 ---
 
 작년 1월에 ADsP를 60점(커트라인)이라는 아주 경제적인(?) 점수로 취득하고 7월에 정처기를 과락으로 말아먹은 뒤 간만에 자격증에 도전하였습니다. 비교적 취득하기 쉽고 현업에서 많이 써먹는다는 강사님의 말씀에 몹쓸병이 도졌습니다. 

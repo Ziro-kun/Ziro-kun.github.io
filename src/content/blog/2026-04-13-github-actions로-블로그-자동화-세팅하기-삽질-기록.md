@@ -3,7 +3,7 @@ title: "GitHub Actions로 블로그 자동화 세팅하기 (삽질 기록)"
 description: "GitHub Actions를 이용해 블로그 배포를 자동화하는 과정에서 겪었던 시행착오와 해결 방법"
 pubDate: "2026-04-13"
 tags: ["GitHub Actions", "자동화", "CI/CD", "블로그"]
-category: "AI 탐구"
+category: "explore"
 ---
 
 드디어 GitHub Actions 자동화 블로그 세팅을 완료했다. 생각보다 **삽질이 많았지만** 결국 해냈다는 게 뿌듯하네.

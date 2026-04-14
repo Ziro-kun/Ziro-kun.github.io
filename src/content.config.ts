@@ -15,7 +15,7 @@ const blog = defineCollection({
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
 			tags: z.array(z.string()).optional(),
-			category: z.enum(["AI 탐구", "데이터 & ML", "자기개발", "일상"]).optional(),
+			category: z.enum(["explore", "data-ml", "growth", "daily"]).optional(),
 		}),
 });
 

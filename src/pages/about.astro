@@ -28,23 +28,21 @@ import Layout from '../layouts/BlogPost.astro';
 	</div>
 </Layout>
 
-<style>
+<style is:global>
 	.about-content {
-		display: flex !important;
-		flex-direction: column !important;
-		align-items: center !important;
-		text-align: center !important;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
 		gap: 1.5rem;
-		width: 100% !important;
-		margin: 0 auto !important;
+		width: 100%;
+		margin: 0 auto;
 	}
-	.about-content :global(p),
-	.about-content p,
-	.about-content strong {
-		text-align: center !important;
+	.about-content p {
+		text-align: center;
 		max-width: 60ch;
 		word-break: keep-all;
-		margin-bottom: 0 !important;
+		margin-bottom: 0;
 		width: 100%;
 	}
 </style>
