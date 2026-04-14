@@ -62,6 +62,16 @@ h6 {
 	margin: -0.25rem 0 1rem 0;
 	font-style: italic;
 }
+/* 이미지 캡션: ~~_텍스트_~~ 패턴 → 작은 회색 이탤릭 캡션 */
+del em {
+	font-size: 0.8em;
+	color: rgb(var(--gray));
+	text-decoration: none;
+	font-style: italic;
+	display: block;
+	margin-top: -0.5rem;
+	margin-bottom: 1rem;
+}
 strong,
 b {
 	font-weight: 700;
