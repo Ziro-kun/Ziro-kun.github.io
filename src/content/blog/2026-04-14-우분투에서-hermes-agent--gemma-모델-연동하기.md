@@ -1,10 +1,10 @@
 ---
-title: "우분투에서 Hermes Agent + Gemma 모델 연동하기"
-description: "Ollama를 통해 로컬 LLM을 실행하고 Hermes Agent와 연동하는 완벽한 가이드"
+title: "우분투에서 Hermes Agent 연동기: 5개 로컬 LLM으로 인한 좌절"
+description: "Gemma부터 Llama까지 5번의 시도, 그리고 내린 결론: Hermes Agent는 고성능 LLM이 필수다"
 pubDate: "2026-04-14"
-tags: ["LLM", "Ollama", "Gemma", "우분투", "로컬AI"]
+tags: ["Hermes Agent", "LLM", "Gemma", "Llama", "삽질", "우분투"]
 category: "explore"
-heroImage: ../../../assets/blog/스크린샷 2026-04-14 19-27-33.png
+heroImage: "https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/hermes-agent.png"
 ---
 
 # 0. 시작하며
