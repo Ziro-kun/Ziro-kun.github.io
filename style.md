@@ -49,37 +49,37 @@ Claude는 아래 스타일을 최대한 충실히 따라야 한다.
 
 ## 이미지 삽입법
 
-### 외부 URL 사용
-```markdown
-![](이미지URL)
-~~_이미지에 대한 짧은 코멘트_~~
+### 이미지 업로드 & 게시 정책 (2026-04-14부터 적용)
+
+**원칙: 이미지는 먼저 깃허브에 커밋&푸시한 후, HTML img 태그로 참조**
+
+#### Step 1: 이미지를 GitHub에 업로드
+```bash
+# 1. src/image/ 폴더에 이미지 저장
+# 2. 파일명: 자유 (공백, 한글 OK)
+
+git add src/image/파일명.png
+git commit -m "add: 블로그 이미지 파일명"
+git push
 ```
 
-### 로컬 이미지 사용 (권장)
-1. 이미지 파일을 `src/image/` 폴더에 저장
-2. 파일명 규칙: `제목-순번.확장자` (예: `새기술배우기-1.png`, `aws배우기-2.jpg`)
-3. input.txt에 글 내용 작성 시 제목과 이미지 파일명의 prefix가 일치하면 자동 인식
-4. **중요**: 포함된 이미지 파일 목록에서만 이미지를 선택하세요. 없는 이미지는 절대 참조하지 마세요.
-5. 마크다운에 다음 형식으로 삽입:
-
-```markdown
-![이미지 설명](../../image/제목-1.png)
+#### Step 2: 블로그 글에서 HTML img 태그로 삽입
+```html
+<img src="https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/파일명.png" alt="이미지설명" style="width:100%;max-width:800px;" />
 ~~_짧은 코멘트_~~
 ```
 
-**주의**: 포함된 이미지 파일 목록에 없는 파일을 참조하면 빌드가 실패합니다. 반드시 제공된 이미지 파일만 사용하세요.
+### 규칙
+- ✅ **반드시 HTML `<img>` 태그 사용** (마크다운 `![]()`는 파서 문제로 사용 금지)
+- ✅ GitHub raw URL 형식: `https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/파일명`
+- ✅ 파일명에 공백/한글 있어도 OK (GitHub가 자동 처리)
+- ✅ `style="width:100%;max-width:800px;"`로 반응형 사이즈 유지
+- ✅ 이미지 캡션: 바로 아래에 `~~_짧은 설명_~~` 형식 (회색 작은 이탤릭으로 자동 스타일링)
 
-### 공통 규칙
-- alt 텍스트는 보통 비워둔다 (외부 URL) 또는 간단히 설명 (로컬 이미지)
-- 이미지 바로 아래 취소선 이탤릭체로 짧은 코멘트 추가 (선택)
-- 스크린샷, 결과물, 상황 증거로 활용
-- 글의 흐름 중간에 자연스럽게 삽입
-
-**예시:**
-```
-input.txt: "GitHub Actions 자동화 여정"
-이미지 파일: src/image/github-actions-자동화-여정-1.png
-마크다운: ![GitHub Actions 설정 화면](../../image/github-actions-자동화-여정-1.png)
+### 예시
+```html
+<img src="https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/스크린샷 2026-04-14 19-40-57.png" alt="에러 메시지" style="width:100%;max-width:800px;" />
+~~_이 에러를 보고 깨달았어요_~~
 ```
 
 ---
