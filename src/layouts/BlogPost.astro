@@ -39,6 +39,29 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				margin: auto;
 				padding: 1em;
 				color: rgb(var(--white));
+				text-align: center;
+			}
+			.prose :global(p),
+			.prose :global(ul),
+			.prose :global(ol),
+			.prose :global(img),
+			.prose :global(blockquote) {
+				margin-left: auto;
+				margin-right: auto;
+			}
+			.prose :global(p) {
+				max-width: 65ch;
+				word-break: keep-all;
+				text-align: center;
+			}
+			.prose :global(ul),
+			.prose :global(ol) {
+				display: inline-block;
+				text-align: left;
+				max-width: 100%;
+			}
+			.prose :global(img) {
+				display: block;
 			}
 			.title {
 				margin-bottom: 4rem;
