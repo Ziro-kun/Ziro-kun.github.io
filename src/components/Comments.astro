@@ -1,0 +1,239 @@
+---
+// Supabase 환경변수는 .env에서 주입됩니다
+---
+
+<section class="comments-section">
+  <h2 class="comments-title">Comments</h2>
+
+  <div id="comments-list">
+    <p class="comments-status">불러오는 중...</p>
+  </div>
+
+  <form id="comment-form" class="comment-form" novalidate>
+    <!-- 봇 방지 허니팟 -->
+    <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off" />
+
+    <div class="form-fields">
+      <input id="c-nick" type="text" placeholder="닉네임" maxlength="30" required />
+      <textarea id="c-body" placeholder="댓글을 남겨주세요" maxlength="500" rows="3" required></textarea>
+    </div>
+    <div class="form-footer">
+      <span id="form-msg"></span>
+      <button type="submit">남기기</button>
+    </div>
+  </form>
+</section>
+
+<script>
+  const BASE = import.meta.env.PUBLIC_SUPABASE_URL;
+  const KEY  = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const PATH = window.location.pathname;
+
+  const baseHeaders: Record<string, string> = {
+    apikey: KEY,
+    Authorization: `Bearer ${KEY}`,
+    'Content-Type': 'application/json',
+  };
+
+  function esc(s: string) {
+    return s
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/\n/g, '<br>');
+  }
+
+  function fmtDate(iso: string) {
+    return new Date(iso).toLocaleDateString('ko-KR', {
+      year: 'numeric', month: 'long', day: 'numeric',
+    });
+  }
+
+  async function loadComments() {
+    const list = document.getElementById('comments-list')!;
+    try {
+      const res = await fetch(
+        `${BASE}/rest/v1/comments?post_path=eq.${encodeURIComponent(PATH)}&order=created_at.asc&select=nickname,content,created_at`,
+        { headers: baseHeaders }
+      );
+      const data: { nickname: string; content: string; created_at: string }[] = await res.json();
+
+      if (!Array.isArray(data) || data.length === 0) {
+        list.innerHTML = '<p class="comments-status">첫 댓글을 남겨보세요.</p>';
+        return;
+      }
+
+      list.innerHTML = data.map(c => `
+        <div class="comment-item">
+          <div class="comment-meta">
+            <span class="comment-nick">${esc(c.nickname)}</span>
+            <span class="comment-date">${fmtDate(c.created_at)}</span>
+          </div>
+          <p class="comment-content">${esc(c.content)}</p>
+        </div>
+      `).join('');
+    } catch {
+      list.innerHTML = '<p class="comments-status">댓글을 불러오지 못했습니다.</p>';
+    }
+  }
+
+  document.getElementById('comment-form')!.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+
+    // 허니팟
+    if ((form.elements.namedItem('website') as HTMLInputElement).value) return;
+
+    // 1분 제한
+    const last = localStorage.getItem('last_comment_ts');
+    if (last && Date.now() - Number(last) < 60_000) {
+      setMsg('1분에 한 번만 댓글을 달 수 있어요.', 'error');
+      return;
+    }
+
+    const nickname = (document.getElementById('c-nick') as HTMLInputElement).value.trim();
+    const content  = (document.getElementById('c-body') as HTMLTextAreaElement).value.trim();
+    if (!nickname || !content) return;
+
+    setMsg('전송 중...', '');
+
+    try {
+      const res = await fetch(`${BASE}/rest/v1/comments`, {
+        method: 'POST',
+        headers: { ...baseHeaders, Prefer: 'return=minimal' },
+        body: JSON.stringify({ post_path: PATH, nickname, content }),
+      });
+
+      if (res.ok) {
+        localStorage.setItem('last_comment_ts', String(Date.now()));
+        (document.getElementById('c-nick') as HTMLInputElement).value = '';
+        (document.getElementById('c-body') as HTMLTextAreaElement).value = '';
+        setMsg('댓글이 등록되었습니다.', 'success');
+        await loadComments();
+      } else {
+        setMsg('오류가 발생했습니다. 다시 시도해주세요.', 'error');
+      }
+    } catch {
+      setMsg('네트워크 오류가 발생했습니다.', 'error');
+    }
+  });
+
+  function setMsg(text: string, type: string) {
+    const el = document.getElementById('form-msg')!;
+    el.textContent = text;
+    el.className = `form-msg ${type}`;
+  }
+
+  loadComments();
+</script>
+
+<style>
+  .comments-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #27272a;
+  }
+
+  .comments-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: rgb(var(--gray-dark));
+    margin: 0 0 1.25rem 0;
+  }
+
+  /* 댓글 목록 */
+  .comment-item {
+    padding: 0.875rem 1rem;
+    background: #18181b;
+    border: 1px solid #27272a;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+  }
+  .comment-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.4rem;
+  }
+  .comment-nick {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .comment-date {
+    font-size: 0.775rem;
+    color: rgb(var(--gray));
+  }
+  .comment-content {
+    font-size: 0.9rem;
+    color: rgb(var(--gray-dark));
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .comments-status {
+    font-size: 0.875rem;
+    color: rgb(var(--gray));
+    margin-bottom: 1.25rem;
+  }
+
+  /* 작성 폼 */
+  .comment-form {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .comment-form input,
+  .comment-form textarea {
+    width: 100%;
+    background: #18181b;
+    border: 1px solid #27272a;
+    border-radius: 8px;
+    padding: 0.6rem 0.875rem;
+    color: white;
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+  }
+  .comment-form input:focus,
+  .comment-form textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .form-msg {
+    font-size: 0.8rem;
+    color: rgb(var(--gray));
+  }
+  .form-msg.error   { color: #f87171; }
+  .form-msg.success { color: var(--accent); }
+
+  .comment-form button {
+    padding: 0.5rem 1.25rem;
+    background: rgba(212,255,0,0.1);
+    border: 1px solid rgba(212,255,0,0.3);
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .comment-form button:hover {
+    background: rgba(212,255,0,0.2);
+  }
+</style>
