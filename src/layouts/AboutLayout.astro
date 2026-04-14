@@ -35,8 +35,8 @@ const { title, description, heroImage } = Astro.props;
 				position: absolute;
 				top: 52%; /* Adjust roughly based on generated image */
 				left: 45%;
-				width: 30px;
-				height: 30px;
+				width: 60px;
+				height: 60px;
 				border-radius: 50%;
 				transform: translate(-50%, -50%);
 				cursor: pointer;
@@ -91,15 +91,13 @@ const { title, description, heroImage } = Astro.props;
 		<Footer />
 
 		<script>
-			// 고양이 오드아이 이스터에그 로직
-			document.addEventListener('DOMContentLoaded', () => {
-				const eye = document.getElementById('cat-eye');
-				if (eye) {
-					eye.addEventListener('click', () => {
-						eye.classList.toggle('active');
-					});
-				}
-			});
+			// 고양이 오드아이 이스터에그 로직 (Astro에서는 스크립트가 모듈로 실행되므로 바로 실행)
+			const eye = document.getElementById('cat-eye');
+			if (eye) {
+				eye.addEventListener('click', () => {
+					eye.classList.toggle('active');
+				});
+			}
 		</script>
 	</body>
 </html>
