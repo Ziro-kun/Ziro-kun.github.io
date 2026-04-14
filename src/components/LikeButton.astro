@@ -1,10 +1,5 @@
 ---
 // Supabase 환경변수는 .env에서 주입됩니다
-interface Props {
-  postPath: string;
-}
-
-const { postPath } = Astro.props;
 ---
 
 <div class="like-container">
@@ -14,9 +9,10 @@ const { postPath } = Astro.props;
   </button>
 </div>
 
-<script define:vars={{ postPath }}>
+<script>
   const BASE = import.meta.env.PUBLIC_SUPABASE_URL;
   const KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const postPath = window.location.pathname;
 
   const baseHeaders = {
     apikey: KEY,
