@@ -65,6 +65,7 @@
   // 좋아요 추가/제거
   async function toggleLike() {
     const btn = document.getElementById('like-btn');
+    const heartIcon = btn.querySelector('.heart-icon');
     const sessionId = getSessionId();
 
     try {
@@ -80,6 +81,7 @@
           }
         );
         btn.classList.remove('liked');
+        heartIcon.textContent = '♡';
       } else {
         // 좋아요 추가
         await fetch(`${BASE}/rest/v1/likes`, {
@@ -88,6 +90,7 @@
           body: JSON.stringify({ post_path: postPath, session_id: sessionId }),
         });
         btn.classList.add('liked');
+        heartIcon.textContent = '♥';
       }
 
       await loadLikeCount();
@@ -99,11 +102,13 @@
   // 초기화
   async function init() {
     const btn = document.getElementById('like-btn');
+    const heartIcon = btn.querySelector('.heart-icon');
     await loadLikeCount();
 
     // 사용자가 이미 좋아요 했는지 확인
     if (await isUserLiked()) {
       btn.classList.add('liked');
+      heartIcon.textContent = '♥';
     }
 
     btn.addEventListener('click', toggleLike);
