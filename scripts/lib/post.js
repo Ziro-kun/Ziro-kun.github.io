@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { askClaude } from "./claude.js";
+import { getImagesForPost } from "./imageHandler.js";
 
 const POSTS_DIR = path.resolve("src/content/blog");
 
@@ -17,6 +18,13 @@ function getToday() {
 }
 
 export async function generateAndSavePost(userPrompt, styleGuide = "") {
+  // 이미지 감지
+  const images = getImagesForPost(userPrompt);
+  const imageInfo =
+    images.length > 0
+      ? `\n\n[포함된 이미지 파일 목록]\n${images.map((img) => `- ${img.filename}`).join("\n")}\n마크다운에서는 ![이미지 설명](../../image/${img.filename}) 형식으로 삽입하세요.`
+      : "";
+
   const systemPrompt = styleGuide
     ? `다음 글쓰기 스타일을 따라주세요:\n\n${styleGuide}\n\n`
     : "";
@@ -33,7 +41,7 @@ pubDate: "${today}"
 tags: ["태그1", "태그2"]
 ---
 
-${userPrompt}`;
+${userPrompt}${imageInfo}`;
 
   const content = await askClaude(fullPrompt);
 
