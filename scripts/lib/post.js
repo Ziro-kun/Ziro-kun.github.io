@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { askClaude } from "./claude.js";
 import { getImagesForPost } from "./imageHandler.js";
+import { cleanNonexistentImages } from "./validateImages.js";
 
 const POSTS_DIR = path.resolve("src/content/blog");
 
@@ -43,7 +44,10 @@ tags: ["태그1", "태그2"]
 
 ${userPrompt}${imageInfo}`;
 
-  const content = await askClaude(fullPrompt);
+  let content = await askClaude(fullPrompt);
+
+  // 존재하지 않는 이미지 참조 자동 정리
+  content = cleanNonexistentImages(content);
 
   // title 추출
   const titleMatch = content.match(/title:\s*["']?(.+?)["']?\s*\n/);
