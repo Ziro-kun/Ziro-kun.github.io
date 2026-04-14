@@ -1,291 +1,216 @@
 ---
-title: "우분투에서 Hermes Agent + Gemma 모델 연동하기"
-description: "모델 파일만으로는 부족하다 — Ollama와 Hermes Agent로 로컬 LLM 구동하기"
+title: "우분투에서 Hermes Agent 연동기: 4개 로컬 LLM의 좌절"
+description: "Gemma부터 Llama까지 4번의 시도, 그리고 내린 결론: Hermes Agent는 고성능 LLM이 필수다"
 pubDate: "2026-04-14"
-tags: ["LLM", "Gemma", "Ollama", "Hermes Agent", "우분투", "AI"]
+tags: ["Hermes Agent", "LLM", "Gemma", "Llama", "삽질", "우분투"]
 category: "explore"
 heroImage: ../../image/ hermes-agent.png
 ---
 
 # 0. 들어가며
 
-> Gemma 모델 파일만 있으면 되지 않을까?
+> 로컬 LLM으로 충분하겠지?
 
-처음엔 정말 그렇게 생각했습니다. 모델 파일을 받으면 바로 실행할 수 있을 거라고요. 우분투에서 Hermes Agent와 Gemma를 연동하려고 했을 때의 이야기입니다.
+우분투에서 Hermes Agent를 구동하려고 했습니다. Gemma 모델 파일을 받았고, Ollama를 설치했고, Hermes Agent도 설치했습니다. 
 
-하지만 현실은 훨씬 더 복잡했습니다. 정전으로 세션이 몇 번 끊기고, 메모리 부족으로 모델이 죽고, 포트 충돌로 삽질하면서 깨달은 게 하나 있었거든요.
+모든 준비가 완료되었다고 생각했습니다.
 
-**"모델 파일만으로는 부족하다. 추론 엔진이 있어야 한다."**
-
-Gemini와의 대화를 통해 정리한 이 여정을 여러분과 나누려고 합니다.
+그 생각이 얼마나 순진했는지 깨달아주신 건 4번의 연속 실패였습니다.
 
 ---
 
-# 1. 추론 엔진이란 뭘까
-
-## 모델 파일과 실행의 간극
-
-`Gemma-2-27b.gguf` 같은 모델 파일을 손에 들고 있다고 해봅시다. 이건 뭘까요?
-
-> 그냥 가중치 데이터일 뿐입니다.
-
-모델 파일은 AI의 "뇌"지만, 실제로 생각하게 만드는 건 따로 있어야 해요. 바로:
-
-- 모델을 GPU/CPU 메모리에 로드
-- 입력값을 처리
-- 계산을 실행  
-- 결과를 반환
-
-이 모든 걸 담당하는 게 **추론 엔진(Inference Engine)**입니다.
-
-![깃애니멀 퀴즈 시스템](../../image/스크린샷 2026-03-09 23-11-22.png)
-~~_추론 엔진이 없으면 이 정도 성능도 낼 수 없어요_~~
-
-## 선택지들
-
-우분투에서 쓸 수 있는 추론 엔진은 여러 개가 있습니다:
-
-| 엔진 | 특징 | 추천 대상 |
-|------|------|---------|
-| **Ollama** | 모든 걸 자동으로 처리, 가장 간단 | 입문자, 빠른 구성 |
-| **vLLM** | 높은 처리량, 성능 최적화 | 대규모 배포, 성능 중시 |
-| **LM Studio** | GUI 제공, 매우 직관적 | GUI 선호자 |
-| **Text Generation WebUI** | 기능 많음, 커스터마이징 가능 | 고급 사용자 |
-
-저는 **Ollama**를 적극 추천합니다.
-
-> Ollama는 "모델 다운로드 → 메모리 로드 → API 서버 생성"을 한 번에 처리해줍니다.
-
----
-
-# 2. Ollama + Hermes Agent 설치하기
-
-## Step 1: NVIDIA 드라이버 확인
-
-GPU로 돌릴 거라면 NVIDIA 드라이버가 설치되어 있는지 먼저 확인하세요:
-
-```bash
-nvidia-smi
-```
-
-드라이버가 없다면:
-
-```bash
-sudo apt update && sudo apt install nvidia-driver-550
-```
-
-(2026년 기준, 550이 표준입니다)
-
-## Step 2: Ollama 설치
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-```
-
-이 명령어 하나로 모든 게 끝납니다. Ollama는 설치되면서 자동으로 systemd 서비스로 등록됩니다.
-
-## Step 3: Gemma 모델 선택하기
-
-Hermes Agent와 함께 쓸 Gemma를 고르는 게 중요합니다. 하드웨어 사양을 고려해서요:
-
-```bash
-# 가벼운 테스트용
-ollama pull gemma2:2b
-
-# 일반적인 추론 (권장)
-ollama pull gemma4:26b
-
-# 고성능 장비용
-ollama pull gemma2:27b
-```
-
-제 경우엔 ZenBook(16GB RAM)이라서 Gemma 4 26B를 받으려다가 메모리 부족으로 삽질했습니다. ~~_나 같은 사람이 될 필요는 없어요_~~
-
-## Step 4: Hermes Agent 설치
-
-`pip install hermes-agent`는 안 됩니다. (저도 같은 에러를 만났어요)
-
-공식 설치 스크립트를 사용하세요:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
-```
-
-설치 후 터미널을 재시작하거나:
-
-```bash
-source ~/.bashrc
-```
-
-## Step 5: Hermes Agent 설정
-
-```bash
-hermes setup
-```
-
-여기서 아래를 선택하면 됩니다:
-
-- **Model Provider**: Custom endpoint (번호 24)
-- **Base URL**: `http://localhost:11434/v1`
-- **Model Name**: `gemma4:26b` (또는 당신이 받은 모델명)
-- **API Key**: `ollama` (뭐든 상관없어요)
-- **Context Length**: Enter (비워두세요)
-
----
-
-# 3. 첫 실행 시 주의할 점들
-
-## 포트 충돌 확인
-
-만약 11434 포트가 이미 사용 중이라면?
-
-```bash
-netstat -tulpn | grep 11434
-```
-
-Docker 같은 다른 서비스가 쓰고 있을 수 있거든요.
-
-## 메모리 부족 문제
-
-가장 흔한 에러입니다:
+# 1. 첫 번째 시도: Gemma 4 26B — 메모리의 벽
 
 ```
 ❌ Error: HTTP 500: model requires more system memory 
            (18.3 GiB) than is available (14.1 GiB)
 ```
 
-이러면 더 작은 모델을 선택하세요:
+당연한 거였어요. ZenBook 16GB RAM으로 26B 모델을 돌리려니까요.
 
-```bash
-ollama pull gemma2:7b
-```
+![스크린샷 2026-04-14 20-21-44.png](../../image/스크린샷 2026-04-14 20-21-44.png)
+~~_이 에러 메시지를 먹고 자라야 나중에 버틸 수 있어_~~
 
-또는 더 가벼운 퀀타이즈 버전:
-
-```bash
-ollama pull bartowski/gemma-4-26B-A4B-it-GGUF
-```
-
-## 정전 대비 (중요!)
-
-우분투 서버에서 가장 무서운 게 정전입니다. 종료되면 Ollama가 자동으로 시작되지 않거든요.
-
-```bash
-systemctl status ollama
-```
-
-으로 확인하고, 재부팅 후에도 살아있는지 체크하세요. 필요하면 수동으로:
-
-```bash
-ollama serve
-```
-
-또는 더 안전하게 tmux 세션을 사용:
-
-```bash
-tmux new -s ollama
-ollama serve
-# Ctrl+B, D로 나가기
-# 나중에 tmux attach -t ollama로 복구
-```
+**교훈:** 로컬에서 큰 모델은 메모리가 없으면 불가능합니다.
 
 ---
 
-# 4. 성능과 모델 선택
+# 2. 두 번째 시도: Gemma 2 9B — "Tool 지원 안 함" 에러
 
-## 하드웨어별 추천 모델
+더 작은 모델로 내렸습니다. Gemma 2 9B. 좋았어요, 메모리도 들어옵니다.
 
-| 노트북/장비 | VRAM | 추천 모델 |
-|-----------|------|---------|
-| 라이젠 노트북 (내장) | 8GB | Gemma 2 2B |
-| ZenBook (내장, 16GB) | 10GB 정도 | Gemma 2 7B |
-| RTX 3060 | 12GB | Gemma 2 13B |
-| RTX 4090 | 24GB | Gemma 4 26B ✓ |
-| A100/H100 | 40GB+ | Gemma 4 31B |
+그런데...
 
-저는 이 표를 무시하고 26B를 받으려다가 낭패를 봤습니다. ~~_권장사항은 권장사항이다_~~
+```
+ERROR [20260414_205733_fdabf3] root: Non-retryable client error: 
+Error code: 400 - {'error': {'message': 
+'registry.ollama.ai/library/gemma2:9b does not support tools', 
+'type': 'invalid_request_error'}}
+```
 
-## 모델별 특징
+> "does not support tools"
 
-**Gemma 4 (최신, 2026년 3월)**
-- 함수 호출(Function Calling) 최적화
-- Thinking Mode 지원 (답변 전에 생각)
-- 256K 컨텍스트 윈도우
-- Hermes Agent와의 호환성 최고
+여기서 깨달았어요. **Hermes Agent는 단순한 챗봇이 아니었어요. 도구를 쓸 수 있는 에이전트였어요.**
 
-**Gemma 2 (일반적)**
-- 전반적으로 안정적
-- 다양한 사이즈(2B, 7B, 9B, 27B)
-- 리소스 효율성 우수
+Gemma 2 9B는 도구(tools) 파라미터를 받지 못합니다.
+
+![스크린샷 2026-03-10 00-53-21.png](../../image/스크린샷 2026-03-10 00-53-21.png)
+~~_로컬 LLM은 도구를 몰라요_~~
+
+**교훈:** 도구 지원이 없는 모델은 에이전트의 "손가락"이 없는 거나 마찬가지입니다.
 
 ---
 
-# 5. 실제 사용해보기
-
-## Hermes Agent 실행
-
-```bash
-hermes
-```
-
-실행하고 "Who are you?"라고 물어봅시다:
+# 3. 세 번째 시도: Llama 3.1 8B — 느림의 극치
 
 ```
-> Who are you?
-
-I am Hermes Agent, an advanced AI assistant powered by 
-Gemma 4 26B model...
+ollama run llama3.1:8b
 ```
 
-이렇게 Gemma로부터 답변이 오면 성공입니다!
+Llama는 도구를 지원합니다! 마침내!
 
-## API로 접근 (Python)
+Hermes에 연결했어요. 설정도 완료했어요. "안녕?"이라고 물었어요.
 
-Hermes Agent는 뒤에서 OpenAI 호환 API를 제공합니다:
+...
 
-```python
-from openai import OpenAI
+5분이 흘렀어요.
 
-client = OpenAI(
-    base_url="http://localhost:11434/v1",
-    api_key="ollama"
-)
-
-response = client.chat.completions.create(
-    model="gemma4:26b",
-    messages=[{"role": "user", "content": "Hello!"}]
-)
-
-print(response.choices[0].message.content)
 ```
+INFO agent.model_metadata: Cached context length llama3.1:8b@http://localhost:11434/v1 
+-> 131,072 tokens
+```
+
+문제가 보였어요. **131K 토큰.** 
+
+Hermes Agent가 모델의 최대 context window를 전부 잡아먹고 있었어요. ZenBook의 16GB RAM은 128K 토큰을 할당하면서 동시에:
+
+- 28개의 도구 정의 로드
+- 76개의 스킬 설명 읽기
+- 대화 제목 자동 생성
+- 백그라운드 작업들...
+
+이 모든 걸 한 번에 해야 했어요.
+
+8B 모델도 5분 이상 걸렸습니다.
+
+![스크린샷 2026-04-14 20-31-18.png](../../image/스크린샷 2026-04-14 20-31-18.png)
+~~_5분은 기다리는 게 아니라 고문이야_~~
+
+**교훈:** 로컬 LLM은 에이전트의 도구, 스킬, 128K 컨텍스트를 다 처리할 능력이 없습니다.
 
 ---
 
-# 6. 마치며
+# 4. 네 번째 시도: Llama 3.2 3B — 여전히 9분
 
-이 과정을 거치면서 배운 게 있습니다:
+"더 작은 모델이면 빠르지 않을까?"
 
-> 모델은 도구지, 그 자체로는 아무것도 아니다.
+Llama 3.2 3B는 단 **2GB**입니다. 아주 가볍습니다.
 
-Gemma 파일 하나로는 할 수 없는 게 정말 많습니다. Ollama라는 추론 엔진이 있어야 비로소 "작동하는" AI가 됩니다. 그리고 Hermes Agent가 그걸 "에이전트"로 변신시킵니다.
+메모리 부족은 없을 거예요.
 
-우분투에서 정전도 여러 번 겪고, 메모리 부족으로 삽질하고, 포트 충돌로 답답해했지만, 결국:
+그런데...
 
-1. Ollama로 모델을 띄우고
-2. Hermes Agent로 연결하면
-3. 정말 강력한 로컬 AI 에이전트가 탄생합니다.
-
-지금 바로 터미널에서:
-
-```bash
-curl -fsSL https://ollama.com/install.sh | sh
-ollama pull gemma2
-curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
-hermes
+```
+14s
 ```
 
-이 네 줄만 실행해 보세요. 여러분의 컴퓨터가 갑자기 "생각하는 기계"로 변신할 거예요.
+응답이 왔습니다. 14초가 아닙니다.
 
-> 새로운 기술을 두려워하지 마세요. 기술은 결국 도구일 뿐입니다. 필요한 건 용기와 조금의 인내심뿐이에요.
+**9분.**
 
-Happy prompting! 🚀
+로그를 봤어요:
+
+```
+INFO agent.model_metadata: Cached context length llama3.2:3b@http://localhost:11434/v1 
+-> 131,072 tokens
+```
+
+여전히 128K 컨텍스트를 할당하고 있었어요. 3B 모델이 이 거대한 메모리 공간을 처리하려니:
+
+- 처음 6분: 메모리 할당 및 스왑
+- 다음 2분: 28개 도구 + 76개 스킬 처리
+- 마지막 1분: 실제 답변 생성
+
+![스크린샷 2026-04-14 21-22-19.png](../../image/스크린샷 2026-04-14 21-22-19.png)
+~~_9분 기다리다가 답장 한 줄... 이건 연애가 아니라 고문이야_~~
+
+**교훈:** 로컬 LLM의 크기 문제가 아니라, Hermes Agent의 **기본 요구사항** 문제였어요.
+
+---
+
+# 5. 최종 깨달음: Hermes Agent의 진짜 요구사항
+
+4번의 실패를 통해 알게 된 것:
+
+## Hermes Agent는 단순 LLM이 아니라 **도구 기반 에이전트**
+
+- **28개의 도구**를 모델에게 설명해야 함
+- **76개의 스킬**을 동시에 관리
+- **128K (131,072) 컨텍스트** 윈도우 자동 할당
+- 백그라운드에서 동시에 돌아가는 부가 작업들
+
+## 로컬 LLM의 한계
+
+| 모델 | 메모리 | Tool 지원 | 속도 | 결과 |
+|------|--------|---------|------|------|
+| Gemma 4 26B | ❌ 18GB 필요 | ✅ | - | **실패** |
+| Gemma 2 9B | ✅ 6GB | ❌ Tool 미지원 | - | **실패** |
+| Llama 3.1 8B | ✅ | ✅ | ⏳ 5분+ | **실패** |
+| Llama 3.2 3B | ✅ | ✅ | ⏳ 9분 | **실패** |
+
+## 문제의 본질
+
+로컬 LLM이 느린 게 아니라, Hermes Agent가 요구하는 것이:
+
+1. **최소 64K 이상의 컨텍스트 윈도우**
+2. **Function calling / Tool use 완벽 지원**
+3. **복잡한 프롬프트 처리 능력**
+
+이 모든 조건을 로컬에서 충족하려면, 거대한 GPU 서버가 필요합니다.
+
+---
+
+# 6. 결론: 클라우드 LLM이 정답
+
+Hermes Agent는 **로컬 LLM으로는 운영이 불가능**합니다.
+
+- 시간이 너무 오래 걸림
+- 도구 지원이 불안정함
+- 컨텍스트 할당 문제
+
+> 이제 알아요. 에이전트 프레임워크는 고성능 LLM이 필수야.
+
+**권장:**
+
+```bash
+hermes setup
+→ 2. OpenRouter (또는 유료 API)
+→ Gemma 4 26B 또는 Claude, GPT-4 등
+→ 즉시 응답, 안정적인 도구 사용
+```
+
+로컬에 집착했던 제 마음을 버렸을 때, 비로소 Hermes Agent가 진짜 빛을 발했어요.
+
+---
+
+# 7. 마치며
+
+이 여정은 다음을 가르쳐줬습니다:
+
+> 모든 기술이 로컬 실행에 적합한 건 아니다.
+
+특히 **에이전트 프레임워크**는 도구 관리, 컨텍스트 처리, 동시성 처리 같은 복잡한 작업을 합니다. 이를 저사양 하드웨어에서 돌리려 하면:
+
+- 메모리 부족
+- 극심한 지연
+- 도구 오류
+
+의 무한 루프에 빠집니다.
+
+만약 당신도 로컬 LLM으로 Hermes Agent를 구동하려고 했다면, 지금이라도 멈추세요.
+
+클라우드 LLM(OpenRouter, Claude, GPT-4 등)으로 가세요.
+
+당신의 젠북은 감사할 거고, 당신의 인내심도 구해질 거고, Hermes Agent는 진짜 에이전트처럼 일할 거예요.
+
+**Happy agenting! 🤖**
