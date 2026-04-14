@@ -74,7 +74,7 @@ git push
 - ✅ GitHub raw URL 형식: `https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/파일명`
 - ✅ 파일명에 공백/한글 있어도 OK (GitHub가 자동 처리)
 - ✅ `style="width:100%;max-width:800px;"`로 반응형 사이즈 유지
-- ✅ 이미지 캡션: 바로 아래에 `~~_짧은 설명_~~` 형식 (회색 작은 이탤릭으로 자동 스타일링)
+- ✅ 이미지 캡션 (선택): 농담/자조적 표현이 필요할 때만 `~~_짧은 설명_~~` 형식 사용 (회색 작은 이탤릭으로 자동 스타일링)
 
 ### 예시
 ```html
