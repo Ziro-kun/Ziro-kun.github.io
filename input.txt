@@ -1,1 +1,29 @@
-오늘 GitHub Actions 자동화 블로그 세팅을 완료했다. 생각보다 삽질을 많이 했지만 결국 해냈다.
+2026-04-09 gitanimal 발견, 내 포트폴리오 페이지에 붙인 hits 카운터의 https://hits.sh/showcase/ 를 확인하다가 상위 랭크에 존재하는 gitnaimal을 발견했다. 깃애니멀은 내가 레포지토리에 기여하거나 커밋하면서 캐릭터를 키우는 것이다. 이것저것 테스트 해봤고 너무 귀여웠다. 길드 시스템도 있어서 우리 부트캠프 팀원들을 길드에 초대해서 함께 했다. <a href="https://www.gitanimals.org/">
+      <img
+        src="https://render.gitanimals.org/guilds/829895026409453279/draw"
+        width="600"
+        height="300"
+        alt="gitanimals"
+      />
+    </a> 혹은 https://www.gitanimals.org/en_US/guild/829895026409453279 이게 우리 길드 채널이다.
+    <a href="https://www.gitanimals.org/en_US?utm_medium=image&utm_source=Ziro-kun&utm_content=farm">
+<img
+  src="https://render.gitanimals.org/farms/Ziro-kun"
+  width="600"
+  height="300"
+/>
+</a>
+이게 내 농장이다.
+
+
+<a href="https://www.gitanimals.org/en_US?utm_medium=image&utm_source=Ziro-kun&utm_content=line">
+  <img
+    src="https://render.gitanimals.org/lines/Ziro-kun?pet-id=829911465140916409"
+    width="600"
+    height="120"
+  />
+</a>
+  단일 형태로도 만들 수 있다.
+  /Users/ziro/Ziro-kun.github.io/src/image/gitanimal-post-1.png 퀴즈 시스템도 있다 하루에 한번 할 수 있다. 포인트를 벌 수 있다. /Users/ziro/Ziro-kun.github.io/src/image/gitanimal-post-2.png 갓챠도 돌릴 수 있고 내 캐릭터를 팔 수도 있고 모은 포인트로 배경을 구매할 수도 있다.
+
+  재밌는 시스템이다. /Users/ziro/Ziro-kun.github.io/src/image/gitanimal-post-3.png
