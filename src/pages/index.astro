@@ -1,5 +1,4 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
@@ -7,8 +6,22 @@ import Header from '../components/Header.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const posts = (await getCollection('blog')).sort(
+const allPosts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const CATEGORIES = [
+	{ key: 'explore',  label: 'Explore',    desc: 'AI 탐구 & 에이전트' },
+	{ key: 'data-ml',  label: 'Data & ML',  desc: '데이터 분석 & 머신러닝' },
+	{ key: 'growth',   label: 'Growth',     desc: '자기개발 & 학습' },
+	{ key: 'daily',    label: 'Daily',      desc: '일상 & 근황' },
+] as const;
+
+const categoryPosts = Object.fromEntries(
+	CATEGORIES.map(({ key }) => [
+		key,
+		allPosts.filter((p) => p.data.category === key).slice(0, 3),
+	]),
 );
 ---
 
@@ -18,82 +31,118 @@ const posts = (await getCollection('blog')).sort(
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 		<style>
 			.hero {
-				padding: 4rem 0;
+				padding: 4rem 0 2rem;
 				text-align: center;
-				max-width: 800px;
-				margin: 0 auto;
 			}
 			.hero h1 {
 				font-size: 3.5rem;
-				margin-bottom: 1.5rem;
+				margin-bottom: 1rem;
 				background: linear-gradient(to right, var(--accent), #fff);
 				-webkit-background-clip: text;
 				-webkit-text-fill-color: transparent;
 				font-weight: 800;
 			}
 			.hero p {
-				font-size: 1.25rem;
+				font-size: 1.1rem;
 				color: rgb(var(--gray-dark));
 				line-height: 1.6;
 				word-break: keep-all;
 			}
-			.blog-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-				gap: 2rem;
-				list-style-type: none;
-				margin: 4rem 0 0 0;
-				padding: 0;
+
+			/* 카테고리 섹션 */
+			.category-section {
+				margin: 3rem 0;
 			}
-			.blog-card {
+			.category-header {
+				display: flex;
+				align-items: baseline;
+				gap: 1rem;
+				margin-bottom: 1.25rem;
+				border-bottom: 1px solid #27272a;
+				padding-bottom: 0.75rem;
+			}
+			.category-header h2 {
+				font-size: 1.4rem;
+				font-weight: 700;
+				color: var(--accent);
+				margin: 0;
+			}
+			.category-header span {
+				font-size: 0.9rem;
+				color: rgb(var(--gray));
+			}
+			.category-header a.more {
+				margin-left: auto;
+				font-size: 0.85rem;
+				color: rgb(var(--gray));
+				text-decoration: none;
+				transition: color 0.2s;
+			}
+			.category-header a.more:hover {
+				color: var(--accent);
+			}
+
+			/* 포스트 카드 */
+			.post-list {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1.25rem;
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			.post-card {
 				background: #18181b;
 				border: 1px solid #27272a;
-				border-radius: 16px;
+				border-radius: 12px;
 				overflow: hidden;
-				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-				display: flex;
-				flex-direction: column;
+				transition: all 0.25s ease;
 			}
-			.blog-card:hover {
-				transform: translateY(-8px);
+			.post-card:hover {
+				transform: translateY(-4px);
 				border-color: var(--accent);
-				box-shadow: 0 0 30px rgba(212, 255, 0, 0.1);
+				box-shadow: 0 0 24px rgba(212, 255, 0, 0.08);
 			}
-			.blog-card a {
+			.post-card a {
 				text-decoration: none;
 				color: inherit;
 				display: flex;
 				flex-direction: column;
 				height: 100%;
 			}
-			.blog-card img {
+			.post-card img {
 				width: 100%;
-				height: 200px;
+				height: 150px;
 				object-fit: cover;
-				border-radius: 0;
 			}
-			.blog-card-content {
-				padding: 1.5rem;
-				flex-grow: 1;
+			.post-card-content {
+				padding: 1rem;
 				display: flex;
 				flex-direction: column;
+				gap: 0.4rem;
+				flex: 1;
 			}
-			.blog-card-content .date {
-				font-size: 0.875rem;
+			.post-card-content .date {
+				font-size: 0.8rem;
 				color: rgb(var(--gray));
-				margin-bottom: 0.5rem;
 			}
-			.blog-card-content h2 {
-				font-size: 1.5rem;
-				margin: 0 0 0.5rem 0;
+			.post-card-content h3 {
+				font-size: 1rem;
+				font-weight: 600;
 				color: white;
-				transition: color 0.2s ease;
+				margin: 0;
+				line-height: 1.4;
+				transition: color 0.2s;
+				overflow: hidden;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
 			}
-			.blog-card:hover h2 {
+			.post-card:hover h3 {
 				color: var(--accent);
 			}
-			.blog-card-content p {
-				font-size: 1rem;
+			.post-card-content p {
+				font-size: 0.875rem;
 				color: rgb(var(--gray-dark));
 				margin: 0;
 				overflow: hidden;
@@ -103,13 +152,11 @@ const posts = (await getCollection('blog')).sort(
 			}
 
 			@media (max-width: 720px) {
-				.hero h1 {
-					font-size: 2.5rem;
-				}
-				.blog-grid {
-					grid-template-columns: 1fr;
-					gap: 1.5rem;
-				}
+				.hero h1 { font-size: 2.5rem; }
+				.post-list { grid-template-columns: 1fr; }
+			}
+			@media (min-width: 721px) and (max-width: 960px) {
+				.post-list { grid-template-columns: repeat(2, 1fr); }
 			}
 		</style>
 	</head>
@@ -118,36 +165,38 @@ const posts = (await getCollection('blog')).sort(
 		<main>
 			<section class="hero">
 				<h1>{SITE_TITLE}</h1>
-				<p>
-					🎓 AI Policy & R&D Specialist -> AI/SW Engineer in Training | <br />
-					🛠️ Python, LLM, Structural Thinking | 📐 Problem Redefinition
-				</p>
+				<p>AI Policy & R&D → AI/SW Engineer in Training</p>
 			</section>
-			<section>
-				<ul class="blog-grid">
-					{
-						posts.map((post) => (
-							<li class="blog-card">
-								<a href={'/blog/' + post.id + '/'}>
-									{post.data.heroImage
-												? <Image width={720} height={360} src={post.data.heroImage} alt="" />
-												: post.data.thumbnail
-													? <img src={post.data.thumbnail} alt="" width="720" height="360" loading="lazy" />
-													: null
-											}
-									<div class="blog-card-content">
-										<p class="date">
-											<FormattedDate date={post.data.pubDate} />
-										</p>
-										<h2>{post.data.title}</h2>
-										<p>{post.data.description}</p>
-									</div>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
+
+			{CATEGORIES.map(({ key, label, desc }) => (
+				<section class="category-section">
+					<div class="category-header">
+						<h2>{label}</h2>
+						<span>{desc}</span>
+						<a class="more" href={`/blog/category/${key}`}>전체 보기 →</a>
+					</div>
+					{categoryPosts[key].length === 0 ? (
+						<p style="color: rgb(var(--gray)); font-size: 0.9rem;">아직 포스트가 없습니다.</p>
+					) : (
+						<ul class="post-list">
+							{categoryPosts[key].map((post) => (
+								<li class="post-card">
+									<a href={`/blog/${post.id}/`}>
+										{post.data.thumbnail && (
+											<img src={post.data.thumbnail} alt="" loading="lazy" />
+										)}
+										<div class="post-card-content">
+											<p class="date"><FormattedDate date={post.data.pubDate} /></p>
+											<h3>{post.data.title}</h3>
+											<p>{post.data.description}</p>
+										</div>
+									</a>
+								</li>
+							))}
+						</ul>
+					)}
+				</section>
+			))}
 		</main>
 		<Footer />
 	</body>
