@@ -129,7 +129,7 @@ const { title, description, heroImage } = Astro.props;
 			const eyeGlow  = document.getElementById('eye-glow')     as HTMLElement | null;
 			const beam     = document.getElementById('beam')         as HTMLElement | null;
 
-			if (!container || !eye || !eyeGlow || !beam) return;
+			if (container && eye && eyeGlow && beam) {
 
 			const NATURAL_W = 1024, NATURAL_H = 1024;
 			const EYE_X = 492, EYE_Y = 390;
@@ -184,6 +184,8 @@ const { title, description, heroImage } = Astro.props;
 			updatePosition();
 			window.addEventListener('resize', updatePosition);
 			eye.addEventListener('click', fire);
+
+			} // end if
 		</script>
 	</body>
 </html>
