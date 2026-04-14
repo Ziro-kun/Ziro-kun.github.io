@@ -8,7 +8,7 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & {
 	headings: { depth: number; slug: string; text: string }[];
-	readingTime: number;
+	readingTime?: number;
 	prevPost: CollectionEntry<'blog'> | null;
 	nextPost: CollectionEntry<'blog'> | null;
 	relatedPosts: CollectionEntry<'blog'>[];
@@ -17,7 +17,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 const {
 	title, description, pubDate, updatedDate, heroImage,
 	tags, category, thumbnail,
-	headings, readingTime,
+	headings,
 	prevPost, nextPost, relatedPosts,
 } = Astro.props;
 
@@ -342,9 +342,7 @@ const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
 							)}
 							<span class="meta-divider">·</span>
 							<span class="meta-item"><FormattedDate date={pubDate} /></span>
-							<span class="meta-divider">·</span>
-							<span class="meta-item">{readingTime}min read</span>
-						</div>
+							</div>
 						<h1>{title}</h1>
 						{description && <p class="post-description">{description}</p>}
 					</header>
