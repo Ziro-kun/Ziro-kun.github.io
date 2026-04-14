@@ -1,48 +1,25 @@
 ---
 import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import Layout from '../layouts/AboutLayout.astro';
 ---
 
 <Layout
 	title="About Me"
 	description="AI Policy & R&D Specialist ➡️ AI/SW Engineer in Training"
-	pubDate={new Date('April 13 2026')}
 	heroImage={AboutHeroImage}
 >
-	<div class="about-content">
-		<p>
-			🎓 <strong>AI Policy & R&D Specialist ➡️ AI/SW Engineer in Training</strong>
-		</p>
-		<p>
-			🛠️ <strong>Tech Stack:</strong> Python, LLM, Structural Thinking
-		</p>
-		<p>
-			📐 <strong>Focus:</strong> Problem Redefinition & Solution Engineering
-		</p>
-
-		<p>
-			안녕하세요! AI 정책 및 R&D 전문가에서 실력 있는 AI/SW 엔지니어로 거듭나기 위해 공부하고 있는 Ziro 입니다.
-			저는 평소에 복잡한 문제를 구조적으로 사고하고 정의하여, 최적의 기술적 해법을 찾아내는 과정을 즐깁니다. 
-			이 블로그에는 제가 학습하고 고민한 흔적들을 지속적으로 기록해 나갈 예정입니다.
-		</p>
-	</div>
+	<p>
+		🎓 <strong>AI Policy & R&D Specialist ➡️ AI/SW Engineer in Training</strong>
+	</p>
+	<p>
+		🛠️ <strong>Tech Stack:</strong> Python, LLM, Structural Thinking
+	</p>
+	<p>
+		📐 <strong>Focus:</strong> Problem Redefinition & Solution Engineering
+	</p>
+	<p>
+		안녕하세요! AI 정책 및 R&D 전문가에서 실력 있는 AI/SW 엔지니어로 거듭나기 위해 공부하고 있는 Ziro 입니다.
+		저는 평소에 복잡한 문제를 구조적으로 사고하고 정의하여, 최적의 기술적 해법을 찾아내는 과정을 즐깁니다.
+		이 블로그에는 제가 학습하고 고민한 흔적들을 지속적으로 기록해 나갈 예정입니다.
+	</p>
 </Layout>
-
-<style is:global>
-	.about-content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		gap: 1.5rem;
-		width: 100%;
-		margin: 0 auto;
-	}
-	.about-content p {
-		text-align: center;
-		max-width: 60ch;
-		word-break: keep-all;
-		margin-bottom: 0;
-		width: 100%;
-	}
-</style>
