@@ -4,7 +4,7 @@ description: "Gemma부터 Llama까지 5번의 시도, 그리고 내린 결론: H
 pubDate: "2026-04-14"
 tags: ["Hermes Agent", "LLM", "Gemma", "Llama", "삽질", "우분투"]
 category: "explore"
-heroImage: https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/hermes-agent.png
+heroImage: "https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/hermes-agent.png"
 ---
 
 # 0. 들어가며
@@ -28,7 +28,7 @@ heroImage: https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/sr
 
 당연한 거였어요. VRAM도 없고 16GB RAM을 가진 ZenBook에서 가용 메모리는 14.1GiB였는데, 26B 모델은 당당히 18.3GiB의 시스템 메모리를 요구했습니다. Ollama가 모델을 올리다가 메모리 부족(OOM)으로 포기해버렸습니다.
 
-![스크린샷 2026-04-14 19-40-57](https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14 19-40-57.png)
+![스크린샷 2026-04-14 19-40-57](https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14%2019-40-57.png)
 ~~_이 에러 메시지를 먹고 자라야 나중에 버틸 수 있어_~~
 
 **교훈:** 모델 크기 욕심은 RAM 용량 앞에서는 부질없습니다. 물리적인 한계는 극복할 수 없죠.
