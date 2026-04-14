@@ -21,6 +21,7 @@ def fetch_posts(username, cursor=None):
         id
         title
         short_description
+        thumbnail
         url_slug
         released_at
         tags
@@ -67,14 +68,15 @@ def yaml_string(value):
         return f"'{value}'"
     return f'"{value}"'
 
-def build_frontmatter(title, description, pub_date, tags):
+def build_frontmatter(title, description, pub_date, tags, thumbnail=None):
     tag_list = ", ".join([f'"{t}"' for t in tags])
     desc = description.replace("'", "") if description else ""
+    thumb_line = f'\nthumbnail: "{thumbnail}"' if thumbnail else ""
     return f"""---
 title: {yaml_string(title)}
 description: {yaml_string(desc)}
 pubDate: "{pub_date}"
-tags: [{tag_list}]
+tags: [{tag_list}]{thumb_line}
 ---
 """
 
@@ -105,6 +107,7 @@ def migrate():
         pub_date = format_date(post["released_at"])
         tags = post.get("tags", [])
         description = post.get("short_description", "")
+        thumbnail = post.get("thumbnail")
 
         filename = f"{pub_date}-{sanitize_filename(title)}.md"
         filepath = os.path.join(OUTPUT_DIR, filename)
@@ -116,7 +119,7 @@ def migrate():
 
         try:
             body = fetch_post_body(USERNAME, slug)
-            frontmatter = build_frontmatter(title, description, pub_date, tags)
+            frontmatter = build_frontmatter(title, description, pub_date, tags, thumbnail)
             content = frontmatter + "\n" + body
 
             with open(filepath, "w", encoding="utf-8") as f:

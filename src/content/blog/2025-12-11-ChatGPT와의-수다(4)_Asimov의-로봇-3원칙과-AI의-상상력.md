@@ -4,6 +4,7 @@ description: "ChatGPT와 함께 나누는 HAI(Human-AI Interaction) 대화입니
 pubDate: "2025-12-11"
 tags: ["AI", "HAI", "LLM", "chatGPT", "dialog", "generativeAI", "로봇3원칙", "생성형AI", "인공지능윤리"]
 category: "explore"
+thumbnail: "https://velog.velcdn.com/images/applez/post/2879b828-9d7e-46f9-931e-446cd8701789/image.png"
 ---
 
 # 기계는 어느 정도까지 인간 같아야 하는가? — 로봇 3원칙, 상상력, '인공'지능의 방향성

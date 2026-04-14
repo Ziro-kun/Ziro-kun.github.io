@@ -4,6 +4,7 @@ description: "Computer Vision 실습기 입니다."
 pubDate: "2025-12-18"
 tags: ["AI", "Computer Vision", "ROI", "matplotlib", "opencv", "python"]
 category: "data-ml"
+thumbnail: "https://velog.velcdn.com/images/applez/post/132c7b0c-4e9c-42ec-9a31-9f41379e3c2d/image.png"
 ---
 
 ### 도전과제 3: 빨간색과 녹색 마커를 사용하여 다양한 색상의 카드를 만들고, 특정 색상의 카드가 제시될 때마다 컴퓨터가 인식하도록 할 수 있습니까?

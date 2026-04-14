@@ -4,6 +4,7 @@ description: "AI 미생의 Kaggle 데이터 처리 탐방기 입니다."
 pubDate: "2025-12-14"
 tags: ["AI", "Data Analysis", "PCA", "data", "dimensionality reduction", "kaggle", "machine learning", "pandas", "python", "차원축소"]
 category: "data-ml"
+thumbnail: "https://velog.velcdn.com/images/applez/post/f22e234e-f018-487b-a938-3310c0240cc7/image.png"
 ---
 
 # 0. (차원 축소 전) 모델 학습 및 Feature Importance 확인

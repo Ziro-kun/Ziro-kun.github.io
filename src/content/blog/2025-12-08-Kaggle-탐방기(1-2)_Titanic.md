@@ -4,6 +4,7 @@ description: "AI 미생의 Kaggle 데이터 처리 탐방기 입니다."
 pubDate: "2025-12-08"
 tags: ["AI", "Data Analysis", "data", "kaggle", "machine learning", "pandas", "python"]
 category: "data-ml"
+thumbnail: "https://velog.velcdn.com/images/applez/post/3c3c1af9-a8d5-493b-af22-7ee8c952224b/image.png"
 ---
 
 "본격적으로 데이터를 씹뜯맛즐 해보겠다”고 선언해 놓고, 며칠동안 귀차니즘에 빠져 다른 쉬운 글부터 쓰고 딴짓만 실컷 하다 왔습니다.

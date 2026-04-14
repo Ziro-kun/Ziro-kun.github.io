@@ -4,6 +4,7 @@ description: "AI 미생의 Kaggle 데이터 처리 탐방기 입니다."
 pubDate: "2025-12-01"
 tags: ["AI", "Data Analysis", "data", "kaggle", "machine learning", "pandas", "python"]
 category: "data-ml"
+thumbnail: "https://velog.velcdn.com/images/applez/post/ea9457ef-f98a-4c3d-9b6c-af847b629d41/image.png"
 ---
 
 최근 저는 AI 교육을 받고 있습니다. 아직은 무슨말인지 모를 것들 80%, 알겠는데 혼자 해보라고 하면 못할 것들이 19%, 혼자 할 수 있는 것이 1%쯤 됩니다.😭

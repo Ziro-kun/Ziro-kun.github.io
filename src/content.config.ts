@@ -16,6 +16,7 @@ const blog = defineCollection({
 			heroImage: z.optional(image()),
 			tags: z.array(z.string()).optional(),
 			category: z.enum(["explore", "data-ml", "growth", "daily"]).optional(),
+			thumbnail: z.string().optional(),
 		}),
 });
 
