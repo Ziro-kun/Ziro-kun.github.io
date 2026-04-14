@@ -61,12 +61,18 @@ def format_date(released_at):
     return released_at[:10]
 
 
+def yaml_string(value):
+    """큰따옴표가 포함된 경우 단일따옴표로, 그렇지 않으면 큰따옴표로 감싸기"""
+    if '"' in value:
+        return f"'{value}'"
+    return f'"{value}"'
+
 def build_frontmatter(title, description, pub_date, tags):
     tag_list = ", ".join([f'"{t}"' for t in tags])
-    desc = description.replace('"', "'") if description else ""
+    desc = description.replace("'", "") if description else ""
     return f"""---
-title: "{title}"
-description: "{desc}"
+title: {yaml_string(title)}
+description: {yaml_string(desc)}
 pubDate: "{pub_date}"
 tags: [{tag_list}]
 ---
