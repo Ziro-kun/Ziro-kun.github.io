@@ -126,7 +126,11 @@ const posts = allPosts
 						<li class="blog-card">
 							<a href={'/blog/' + post.id + '/'}>
 									{post.data.heroImage ? (
-										<Image src={post.data.heroImage} alt="" width="720" height="360" loading="lazy" style="width:100%;height:180px;object-fit:cover;" />
+										typeof post.data.heroImage === 'string' ? (
+											<img src={post.data.heroImage} alt="" width="720" height="360" loading="lazy" style="width:100%;height:180px;object-fit:cover;" />
+										) : (
+											<Image src={post.data.heroImage} alt="" width="720" height="360" loading="lazy" style="width:100%;height:180px;object-fit:cover;" />
+										)
 									) : post.data.thumbnail ? (
 										<img src={post.data.thumbnail} alt="" width="720" height="360" loading="lazy" style="width:100%;height:180px;object-fit:cover;" />
 									) : null}
