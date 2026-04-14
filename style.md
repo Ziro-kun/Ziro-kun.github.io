@@ -124,6 +124,40 @@ input.txt: "GitHub Actions 자동화 여정"
 
 ---
 
+## input.txt 포맷
+
+### 일반적인 글쓰기
+```
+글 내용...
+```
+
+### 이미지를 포함해서 쓰기
+
+글 시작 부분에 이미지 메타섹션을 추가하세요:
+
+```
+[images: gitanimal-post-1.png, gitanimal-post-2.png]
+
+글 내용...
+```
+
+**규칙:**
+- 이미지는 쉼표로 구분
+- 파일명은 `src/image/` 폴더에 실제로 있는 파일명과 정확하게 일치해야 함
+- Claude가 이 목록을 보고 마크다운에 자동 삽입
+- 메타섹션은 자동으로 제거되고, 글 내용만 처리됨
+
+**예시:**
+```
+[images: screenshot-1.png, screenshot-2.png]
+
+오늘 새로운 기능을 완성했다.
+
+...
+```
+
+---
+
 ## YAML Frontmatter 형식
 
 ```yaml

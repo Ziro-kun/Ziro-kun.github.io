@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { askClaude } from "./claude.js";
-import { getImagesForPost } from "./imageHandler.js";
+import { extractImagesFromInput, removeImageMetaFromInput } from "./imageExtractor.js";
 import { cleanNonexistentImages } from "./validateImages.js";
 
 const POSTS_DIR = path.resolve("src/content/blog");
@@ -19,11 +19,13 @@ function getToday() {
 }
 
 export async function generateAndSavePost(userPrompt, styleGuide = "") {
-  // 이미지 감지
-  const images = getImagesForPost(userPrompt);
+  // 입력에서 이미지 메타 추출
+  const images = extractImagesFromInput(userPrompt);
+  const cleanInput = removeImageMetaFromInput(userPrompt);
+
   const imageInfo =
     images.length > 0
-      ? `\n\n[포함된 이미지 파일 목록]\n${images.map((img) => `- ${img.filename}`).join("\n")}\n마크다운에서는 ![이미지 설명](../../image/${img.filename}) 형식으로 삽입하세요.`
+      ? `\n\n[포함된 이미지 파일 목록]\n${images.map((img) => `- ${img}`).join("\n")}\n마크다운에서는 ![이미지 설명](../../image/{파일명}) 형식으로 삽입하세요.`
       : "";
 
   const systemPrompt = styleGuide
@@ -42,7 +44,7 @@ pubDate: "${today}"
 tags: ["태그1", "태그2"]
 ---
 
-${userPrompt}${imageInfo}`;
+${cleanInput}${imageInfo}`;
 
   let content = await askClaude(fullPrompt);
 
