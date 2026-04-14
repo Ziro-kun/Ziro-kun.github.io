@@ -3,6 +3,7 @@ title: "Computer Vision 실습_카드 색깔 분류하기"
 description: "Computer Vision 실습기 입니다."
 pubDate: "2025-12-18"
 tags: ["AI", "Computer Vision", "ROI", "matplotlib", "opencv", "python"]
+category: "데이터 & ML"
 ---
 
 ### 도전과제 3: 빨간색과 녹색 마커를 사용하여 다양한 색상의 카드를 만들고, 특정 색상의 카드가 제시될 때마다 컴퓨터가 인식하도록 할 수 있습니까?

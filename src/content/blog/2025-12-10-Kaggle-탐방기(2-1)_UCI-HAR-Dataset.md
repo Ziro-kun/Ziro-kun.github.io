@@ -3,6 +3,7 @@ title: "Kaggle 탐방기(2-1)_UCI-HAR Dataset"
 description: "AI 미생의 Kaggle 데이터 처리 탐방기 입니다."
 pubDate: "2025-12-10"
 tags: ["AI", "Data Analysis", "PCA", "data", "dimensionality reduction", "kaggle", "machine learning", "pandas", "python", "차원축소"]
+category: "데이터 & ML"
 ---
 
 어제 조별활동 피드백에서 크게 느낀 바가 몇 가지 있어서, 다음 조별과제는 좀 더 철저하게 준비하기 위해 차원축소 스터디를 진행하였습니다.

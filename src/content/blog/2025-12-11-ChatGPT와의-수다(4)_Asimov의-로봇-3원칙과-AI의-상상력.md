@@ -3,6 +3,7 @@ title: "ChatGPT와의 수다(4)_Asimov의 로봇 3원칙과 AI의 상상력"
 description: "ChatGPT와 함께 나누는 HAI(Human-AI Interaction) 대화입니다."
 pubDate: "2025-12-11"
 tags: ["AI", "HAI", "LLM", "chatGPT", "dialog", "generativeAI", "로봇3원칙", "생성형AI", "인공지능윤리"]
+category: "AI 탐구"
 ---
 
 # 기계는 어느 정도까지 인간 같아야 하는가? — 로봇 3원칙, 상상력, '인공'지능의 방향성
