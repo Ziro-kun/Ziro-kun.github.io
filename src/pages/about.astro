@@ -1,5 +1,5 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
+import AboutHeroImage from '../assets/about-hero.png';
 import Layout from '../layouts/BlogPost.astro';
 ---
 
@@ -9,19 +9,35 @@ import Layout from '../layouts/BlogPost.astro';
 	pubDate={new Date('April 13 2026')}
 	heroImage={AboutHeroImage}
 >
-	<p>
-		🎓 <strong>AI Policy & R&D Specialist ➡️ AI/SW Engineer in Training</strong>
-	</p>
-	<p>
-		🛠️ <strong>Tech Stack:</strong> Python, LLM, Structural Thinking
-	</p>
-	<p>
-		📐 <strong>Focus:</strong> Problem Redefinition & Solution Engineering
-	</p>
+	<div class="about-content">
+		<p>
+			🎓 <strong>AI Policy & R&D Specialist ➡️ AI/SW Engineer in Training</strong>
+		</p>
+		<p>
+			🛠️ <strong>Tech Stack:</strong> Python, LLM, Structural Thinking
+		</p>
+		<p>
+			📐 <strong>Focus:</strong> Problem Redefinition & Solution Engineering
+		</p>
 
-	<p>
-		안녕하세요! AI 정책 및 R&D 전문가에서 실력 있는 AI/SW 엔지니어로 거듭나기 위해 매진하고 있는 Zi-log의 운영자입니다. 
-		복잡한 문제를 구조적으로 사고하고 정의하여 최적의 기술적 해법을 찾아내는 과정을 즐깁니다. 
-		이 블로그에는 제가 학습하고 고민한 흔적들을 기록해 나갈 예정입니다.
-	</p>
+		<p>
+			안녕하세요! AI 정책 및 R&D 전문가에서 실력 있는 AI/SW 엔지니어로 거듭나기 위해 매진하고 있는 Zi-log의 운영자입니다. 
+			복잡한 문제를 구조적으로 사고하고 정의하여 최적의 기술적 해법을 찾아내는 과정을 즐깁니다. 
+			이 블로그에는 제가 학습하고 고민한 흔적들을 기록해 나갈 예정입니다.
+		</p>
+	</div>
 </Layout>
+
+<style>
+	.about-content {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+	.about-content p {
+		max-width: 60ch;
+		word-break: keep-all;
+	}
+</style>
