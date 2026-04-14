@@ -30,16 +30,21 @@ import Layout from '../layouts/BlogPost.astro';
 
 <style>
 	.about-content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		display: flex !important;
+		flex-direction: column !important;
+		align-items: center !important;
+		text-align: center !important;
 		gap: 1.5rem;
-		width: 100%;
+		width: 100% !important;
+		margin: 0 auto !important;
 	}
-	.about-content p {
-		text-align: center;
+	.about-content :global(p),
+	.about-content p,
+	.about-content strong {
+		text-align: center !important;
 		max-width: 60ch;
 		word-break: keep-all;
-		margin-bottom: 0;
+		margin-bottom: 0 !important;
+		width: 100%;
 	}
 </style>
