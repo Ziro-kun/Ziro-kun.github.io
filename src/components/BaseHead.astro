@@ -54,3 +54,15 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+
+<!-- DevTools Easter Egg -->
+<script>
+	console.log(
+		"%c어디까지 보시게요? 👀", 
+		"color: #d4ff00; font-size: 24px; font-weight: bold; background-color: #18181b; padding: 10px 20px; border-radius: 8px; border: 2px solid #d4ff00;"
+	);
+	console.log(
+		"%c개발자 도구까지 열어보시다니, 코딩에 진심이시군요! 🚀\nWelcome to Zi-log!", 
+		"color: #a1a1aa; font-size: 14px; padding-top: 10px;"
+	);
+</script>
