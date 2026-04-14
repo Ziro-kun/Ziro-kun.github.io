@@ -21,6 +21,8 @@ const { title, description, heroImage } = Astro.props;
 				width: 100%;
 				margin-bottom: 3rem;
 				position: relative;
+				overflow: hidden;
+				border-radius: 0 0 24px 24px;
 			}
 			.hero-image img {
 				display: block;
@@ -31,25 +33,62 @@ const { title, description, heroImage } = Astro.props;
 				border-radius: 0 0 24px 24px;
 				box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 			}
-			.easter-egg-eye {
+
+			/* 히트박스 — 투명하지만 클릭 가능 */
+			#cat-eye {
 				position: absolute;
-				top: 52%; /* Adjust roughly based on generated image */
-				left: 45%;
-				width: 60px;
-				height: 60px;
-				border-radius: 50%;
+				width: 90px;
+				height: 44px;
 				transform: translate(-50%, -50%);
-				cursor: pointer;
+				cursor: crosshair;
 				z-index: 10;
-				transition: all 0.3s ease;
-				/* Invisible by default */
+				border-radius: 50%;
 			}
-			.easter-egg-eye.active {
-				/* Odd-eye effect (e.g. Cyan blue) */
-				background: radial-gradient(circle, rgba(0, 255, 255, 0.6) 0%, rgba(0, 255, 255, 0) 70%);
-				mix-blend-mode: color-dodge;
-				box-shadow: 0 0 15px rgba(0, 255, 255, 0.8), inset 0 0 10px rgba(0, 255, 255, 0.5);
+
+			/* 눈 글로우 */
+			#eye-glow {
+				position: absolute;
+				width: 90px;
+				height: 44px;
+				transform: translate(-50%, -50%);
+				border-radius: 50%;
+				pointer-events: none;
+				z-index: 9;
+				opacity: 0;
+				background: radial-gradient(ellipse, rgba(0, 255, 255, 0.75) 0%, transparent 70%);
+				box-shadow: 0 0 18px 4px rgba(0, 255, 255, 0.7);
 			}
+			#eye-glow.flash {
+				animation: glow-flash 1.2s ease-out forwards;
+			}
+			@keyframes glow-flash {
+				0%   { opacity: 1; }
+				60%  { opacity: 0.9; }
+				100% { opacity: 0; }
+			}
+
+			/* 빔 */
+			#beam {
+				position: absolute;
+				height: 3px;
+				width: 0;
+				transform: translateY(-50%);
+				background: linear-gradient(to right, cyan 0%, rgba(0,255,255,0.4) 70%, transparent 100%);
+				box-shadow: 0 0 8px 2px rgba(0, 255, 255, 0.55);
+				border-radius: 2px;
+				pointer-events: none;
+				opacity: 0;
+				z-index: 8;
+			}
+			#beam.fire {
+				animation: beam-shoot 0.85s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+			}
+			@keyframes beam-shoot {
+				0%   { width: 0;                        opacity: 1; }
+				55%  { width: var(--beam-max-width, 0); opacity: 1; }
+				100% { width: var(--beam-max-width, 0); opacity: 0; }
+			}
+
 			.about-wrapper {
 				display: flex;
 				flex-direction: column;
@@ -79,8 +118,10 @@ const { title, description, heroImage } = Astro.props;
 		<main>
 			{heroImage && (
 				<div class="hero-image" id="hero-container">
-					<Image width={1020} height={400} src={heroImage} alt="Hero Image" id="hero-img" />
-					<div id="cat-eye" class="easter-egg-eye" title="냥?"></div>
+					<Image width={1020} height={400} src={heroImage} alt="" id="hero-img" />
+					<div id="cat-eye" title="냥?"></div>
+					<div id="eye-glow"></div>
+					<div id="beam"></div>
 				</div>
 			)}
 			<div class="about-wrapper">
@@ -91,13 +132,70 @@ const { title, description, heroImage } = Astro.props;
 		<Footer />
 
 		<script>
-			// 고양이 오드아이 이스터에그 로직 (Astro에서는 스크립트가 모듈로 실행되므로 바로 실행)
-			const eye = document.getElementById('cat-eye');
-			if (eye) {
-				eye.addEventListener('click', () => {
-					eye.classList.toggle('active');
-				});
+			const container = document.getElementById('hero-container') as HTMLElement | null;
+			const eye      = document.getElementById('cat-eye')      as HTMLElement | null;
+			const eyeGlow  = document.getElementById('eye-glow')     as HTMLElement | null;
+			const beam     = document.getElementById('beam')         as HTMLElement | null;
+
+			if (!container || !eye || !eyeGlow || !beam) {
+				// about 페이지가 아닌 경우 등 heroImage 없을 때
+				throw new Error('cat easter egg: missing elements');
 			}
+
+			// 원본 이미지(1024×1024) 기준 눈 중심 좌표
+			const NATURAL_W   = 1024;
+			const NATURAL_H   = 1024;
+			const EYE_X       = 492;   // 두 눈의 가운데
+			const EYE_Y       = 386;   // 눈 높이
+
+			let originX = 0;
+			let originY = 0;
+
+			function updatePosition() {
+				const cW = container!.offsetWidth;
+				const cH = container!.offsetHeight;
+
+				// object-fit: cover → 더 큰 쪽 스케일 기준
+				const scale = Math.max(cW / NATURAL_W, cH / NATURAL_H);
+
+				const renderedW = NATURAL_W * scale;
+				const renderedH = NATURAL_H * scale;
+
+				// 이미지 중앙 정렬 오프셋
+				const offsetX = (cW - renderedW) / 2;
+				const offsetY = (cH - renderedH) / 2;
+
+				originX = EYE_X * scale + offsetX;
+				originY = EYE_Y * scale + offsetY;
+
+				eye!.style.left     = `${originX}px`;
+				eye!.style.top      = `${originY}px`;
+				eyeGlow!.style.left = `${originX}px`;
+				eyeGlow!.style.top  = `${originY}px`;
+			}
+
+			function fire() {
+				const maxWidth = container!.offsetWidth - originX + 20;
+
+				// 빔 위치 & 길이 설정
+				beam!.style.left = `${originX}px`;
+				beam!.style.top  = `${originY}px`;
+				beam!.style.setProperty('--beam-max-width', `${maxWidth}px`);
+
+				// 글로우
+				eyeGlow!.classList.remove('flash');
+				void eyeGlow!.offsetWidth;
+				eyeGlow!.classList.add('flash');
+
+				// 빔
+				beam!.classList.remove('fire');
+				void beam!.offsetWidth;
+				beam!.classList.add('fire');
+			}
+
+			updatePosition();
+			window.addEventListener('resize', updatePosition);
+			eye.addEventListener('click', fire);
 		</script>
 	</body>
 </html>
