@@ -131,12 +131,28 @@ input.txt: "GitHub Actions 자동화 여정"
 글 내용...
 ```
 
-### 이미지를 포함해서 쓰기
+### 썸네일(Hero Image) 설정
+
+글 시작 부분에 hero-image 메타섹션을 추가하세요:
+
+```
+[hero-image: my-hero.png]
+
+글 내용...
+```
+
+**규칙:**
+- 이미지는 `src/assets/blog/` 폴더에 저장
+- 파일명은 정확하게 지정
+- Claude가 frontmatter에 `heroImage: ../../../assets/blog/{파일명}` 자동 추가
+- Astro가 자동으로 이미지 최적화
+
+### 본문 이미지 포함해서 쓰기
 
 글 시작 부분에 이미지 메타섹션을 추가하세요:
 
 ```
-[images: gitanimal-post-1.png, gitanimal-post-2.png]
+[images: content-img-1.png, content-img-2.png]
 
 글 내용...
 ```
@@ -147,9 +163,11 @@ input.txt: "GitHub Actions 자동화 여정"
 - Claude가 이 목록을 보고 마크다운에 자동 삽입
 - 메타섹션은 자동으로 제거되고, 글 내용만 처리됨
 
-**예시:**
+### 썸네일 + 본문 이미지 함께 사용
+
 ```
-[images: screenshot-1.png, screenshot-2.png]
+[hero-image: my-hero.png]
+[images: content-img-1.png, content-img-2.png]
 
 오늘 새로운 기능을 완성했다.
 
