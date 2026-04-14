@@ -1,5 +1,5 @@
 ---
-title: "우분투에서 Hermes Agent 연동기: 5개 로컬 LLM의 좌절"
+title: "우분투에서 Hermes Agent 연동기: 5개 로컬 LLM으로 인한 좌절"
 description: "Gemma부터 Llama까지 5번의 시도, 그리고 내린 결론: Hermes Agent는 고성능 LLM이 필수다"
 pubDate: "2026-04-14"
 tags: ["Hermes Agent", "LLM", "Gemma", "Llama", "삽질", "우분투"]
@@ -11,7 +11,7 @@ heroImage: ../../image/hermes-agent.png
 
 > 로컬 LLM으로 충분하겠지?
 
-우분투 노트북(ZenBook, 16GB RAM)에서 Hermes Agent를 구동하려고 했습니다. Ollama를 띄우고 로컬 LLM을 붙이면 될 거라 생각했죠. 모든 준비가 완료되었다고 생각했습니다.
+요즘 또 Hermes Agent가 핫하다길래 노트북(ZenBook, 16GB RAM)에서 Hermes Agent를 구동하려고 했습니다. 공짜로요. Ollama를 띄우고 로컬 LLM을 붙이면 될 거라 생각했죠.
 
 그 생각이 얼마나 순진했는지 깨닫게 된 건 5번의 연속된 실패 덕분이었습니다.
 
@@ -19,7 +19,7 @@ heroImage: ../../image/hermes-agent.png
 
 # 1. 첫 번째 시도: Gemma 4 26B — 메모리의 벽
 
-가장 먼저 웅장한 성능을 약속하는, 가장 최신의 젬마, `Gemma 4 26B` 모델을 돌려봤습니다.
+가장 먼저 웅장한 성능을 약속하는 가장 최신의 젬마, `Gemma 4 26B` 모델을 돌려봤습니다.
 
 ```
 ❌ Error: HTTP 500: model requires more system memory
@@ -28,7 +28,7 @@ heroImage: ../../image/hermes-agent.png
 
 당연한 거였어요. VRAM도 없고 16GB RAM을 가진 ZenBook에서 가용 메모리는 14.1GiB였는데, 26B 모델은 당당히 18.3GiB의 시스템 메모리를 요구했습니다. Ollama가 모델을 올리다가 메모리 부족(OOM)으로 포기해버렸습니다.
 
-![스크린샷 2026-04-14 20-21-44](../../image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14%2020-21-44.png)
+![스크린샷 2026-04-14 20-21-44](../../image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14%2019-40-57.png)
 ~~_이 에러 메시지를 먹고 자라야 나중에 버틸 수 있어_~~
 
 **교훈:** 모델 크기 욕심은 RAM 용량 앞에서는 부질없습니다. 물리적인 한계는 극복할 수 없죠.
@@ -69,7 +69,7 @@ Error code: 400 - {'error': {'message':
 
 Gemma 2 9B 베이스 모델은 에이전트 프레임워크가 던지는 도구 파라미터 구조를 인식하지 못합니다.
 
-![스크린샷 2026-03-10 00-53-21](../../image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-03-10%2000-53-21.png)
+![스크린샷 2026-03-10 00-53-21](../../image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-03-10%2020-53-17.png)
 ~~_도구를 모르는 모델은 에이전트라 할 수 없어요_~~
 
 **교훈:** Function Calling과 Tool Use 기능이 없는 모델은 에이전트의 "손가락"이 없는 거나 마찬가지입니다.
@@ -98,8 +98,8 @@ INFO agent.model_metadata: Cached context length llama3.1:8b@http://localhost:11
 
 8B 모델조차 이 어마어마한 맥락(Context)을 씹어 삼키느라 지연(Latency)이 5분을 훌쩍 넘겨버렸습니다.
 
-![스크린샷 2026-04-14 20-31-18](../../image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14%2020-31-18.png)
-~~_5분은 기다리는 게 아니라 고문이야_~~
+![스크린샷 2026-04-14 20-31-18](../../image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14%2021-22-19.png)
+~~_널 5분 기다릴거였으면 그냥 내가 일을 하겠지.._~~
 
 **교훈:** 에이전트는 매우 방대한 프롬프트와 컨텍스트 공간을 필요로 합니다. 사양이 낮으면 영원한 로딩(Timeout)에 빠질 수밖에 없습니다.
 
@@ -124,9 +124,6 @@ INFO agent.model_metadata: Cached context length llama3.2:3b@http://localhost:11
 - 처음 6분: 131K 메모리 공간 할당 및 스왑(Swap) 사투
 - 다음 2분: 28개 도구 + 76개 스킬 프롬프트 해석
 - 마지막 1분: 아주 짧은 실제 답변 텍스트 생성
-
-![스크린샷 2026-04-14 21-22-19](../../image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14%2021-22-19.png)
-~~_9분 기다리다가 답장 한 줄... 이건 고문이야_~~
 
 **교훈:** 로컬 모델 크기의 문제가 아니었습니다. Hermes Agent가 기본적으로 깔고 들어가는 **막대한 시스템 자원 요구사항** 자체가 개인용 랩탑의 한계를 완전히 벗어난 것이었죠.
 
