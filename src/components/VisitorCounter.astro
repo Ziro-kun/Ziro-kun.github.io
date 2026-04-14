@@ -1,0 +1,62 @@
+---
+// .env 파일에 아래 두 값을 설정하세요:
+//   PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+//   PUBLIC_SUPABASE_ANON_KEY=eyJ...
+---
+
+<p class="visitor-counter">
+  방문자 <span id="visit-count">…</span>명
+</p>
+
+<script>
+  const URL = import.meta.env.PUBLIC_SUPABASE_URL;
+  const KEY = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  const PAGE = 'home';
+
+  async function track() {
+    if (!URL || !KEY) return;
+
+    const headers = {
+      apikey: KEY,
+      Authorization: `Bearer ${KEY}`,
+      'Content-Type': 'application/json',
+    };
+
+    // 이번 세션에서 이미 카운트했으면 조회만
+    if (sessionStorage.getItem('visited_home')) {
+      const res = await fetch(`${URL}/rest/v1/visits?page=eq.${PAGE}&select=count`, { headers });
+      const [row] = await res.json();
+      setCount(row?.count);
+      return;
+    }
+
+    // 첫 방문 → 증가 RPC 호출
+    const res = await fetch(`${URL}/rest/v1/rpc/increment_visit`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ page_id: PAGE }),
+    });
+    const count = await res.json();
+    sessionStorage.setItem('visited_home', '1');
+    setCount(count);
+  }
+
+  function setCount(n: number | null | undefined) {
+    const el = document.getElementById('visit-count');
+    if (el) el.textContent = typeof n === 'number' ? n.toLocaleString() : '-';
+  }
+
+  track().catch(() => setCount(null));
+</script>
+
+<style>
+  .visitor-counter {
+    font-size: 0.85rem;
+    color: rgb(var(--gray));
+    margin-top: 0.75rem;
+  }
+  .visitor-counter span {
+    color: var(--accent);
+    font-weight: 600;
+  }
+</style>

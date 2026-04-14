@@ -4,6 +4,7 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import VisitorCounter from '../components/VisitorCounter.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 const allPosts = (await getCollection('blog')).sort(
@@ -166,6 +167,7 @@ const categoryPosts = Object.fromEntries(
 			<section class="hero">
 				<h1>{SITE_TITLE}</h1>
 				<p>AI Policy & R&D → AI/SW Engineer in Training</p>
+				<VisitorCounter />
 			</section>
 
 			{CATEGORIES.map(({ key, label, desc }) => (
