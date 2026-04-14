@@ -4,7 +4,7 @@ description: "Gemma부터 Llama까지 5번의 시도, 그리고 내린 결론: H
 pubDate: "2026-04-14"
 tags: ["Hermes Agent", "LLM", "Gemma", "Llama", "삽질", "우분투"]
 category: "explore"
-heroImage: ../../image/hermes-agent.png
+heroImage: https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/hermes-agent.png
 ---
 
 # 0. 들어가며
@@ -28,7 +28,7 @@ heroImage: ../../image/hermes-agent.png
 
 당연한 거였어요. VRAM도 없고 16GB RAM을 가진 ZenBook에서 가용 메모리는 14.1GiB였는데, 26B 모델은 당당히 18.3GiB의 시스템 메모리를 요구했습니다. Ollama가 모델을 올리다가 메모리 부족(OOM)으로 포기해버렸습니다.
 
-![스크린샷 2026-04-14 19-40-57](https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/스크린샷 2026-04-14 19-40-57.png)
+![스크린샷 2026-04-14 19-40-57](https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14 19-40-57.png)
 ~~_이 에러 메시지를 먹고 자라야 나중에 버틸 수 있어_~~
 
 **교훈:** 모델 크기 욕심은 RAM 용량 앞에서는 부질없습니다. 물리적인 한계는 극복할 수 없죠.
@@ -69,7 +69,7 @@ Error code: 400 - {'error': {'message':
 
 Gemma 2 9B 베이스 모델은 에이전트 프레임워크가 던지는 도구 파라미터 구조를 인식하지 못합니다.
 
-![스크린샷 2026-04-14 20-53-17](https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/스크린샷 2026-04-14 20-53-17.png)
+![스크린샷 2026-04-14 20-53-17](https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14 20-53-17.png)
 ~~_도구를 모르는 모델은 에이전트라 할 수 없어요_~~
 
 **교훈:** Function Calling과 Tool Use 기능이 없는 모델은 에이전트의 "손가락"이 없는 거나 마찬가지입니다.
@@ -98,7 +98,7 @@ INFO agent.model_metadata: Cached context length llama3.1:8b@http://localhost:11
 
 8B 모델조차 이 어마어마한 맥락(Context)을 씹어 삼키느라 지연(Latency)이 5분을 훌쩍 넘겨버렸습니다.
 
-![스크린샷 2026-04-14 21-22-19](https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/스크린샷 2026-04-14 21-22-19.png)
+![스크린샷 2026-04-14 21-22-19](https://raw.githubusercontent.com/Ziro-kun/Ziro-kun.github.io/main/src/image/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202026-04-14 21-22-19.png)
 ~~_널 5분 기다릴거였으면 그냥 내가 일을 하겠지.._~~
 
 **교훈:** 에이전트는 매우 방대한 프롬프트와 컨텍스트 공간을 필요로 합니다. 사양이 낮으면 영원한 로딩(Timeout)에 빠질 수밖에 없습니다.
