@@ -34,7 +34,6 @@ const { title, description, heroImage } = Astro.props;
 				box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 			}
 
-			/* 히트박스 — 투명하지만 클릭 영역은 여유롭게 확보 */
 			#cat-eye {
 				position: absolute;
 				width: 70px;
@@ -45,7 +44,6 @@ const { title, description, heroImage } = Astro.props;
 				border-radius: 50%;
 			}
 
-			/* 눈 글로우 - 크기를 줄이고 조금 더 선명한 원형/타원형으로 개선 */
 			#eye-glow {
 				position: absolute;
 				width: 36px;
@@ -146,8 +144,6 @@ const { title, description, heroImage } = Astro.props;
 				eye.style.top  = eyeGlow.style.top  = `${originY}px`;
 			}
 
-			// --- 좌표 도우미 (개발자 도구 콘솔 확인용) ---
-			// 이미지를 클릭하면 1024x1024 기준 원본 좌표가 콘솔에 찍힙니다!
 			document.getElementById('hero-img')?.addEventListener('click', (e) => {
 				const rect = container.getBoundingClientRect();
 				const cW = container.offsetWidth;
