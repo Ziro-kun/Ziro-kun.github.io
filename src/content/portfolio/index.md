@@ -4,14 +4,6 @@ description: AI/SW Engineer Portfolio Archive
 pubDate: 2026-05-13
 ---
 
-# 🚀 Welcome to Ziro's Archive
-
-> **"문제 재정의와 구조적 사고를 통해 더 나은 솔루션을 설계합니다."**
->
-> 과거의 기획 경험과 현재의 기술적 역량을 결합하여 실질적인 변화를 만드는 엔지니어가 되고자 합니다.
-
----
-
 ## 🗺️ Quick Navigation
 
 - [🎓 Intel Portfolio](/portfolio/intel) — Intel AI SW Academy 과정 중 수행한 AI/데이터 분석 프로젝트
