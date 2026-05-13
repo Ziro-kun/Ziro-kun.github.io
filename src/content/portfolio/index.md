@@ -7,6 +7,7 @@ pubDate: 2026-05-13
 # 🚀 Welcome to Ziro's Archive
 
 > **"문제 재정의와 구조적 사고를 통해 더 나은 솔루션을 설계합니다."**
+>
 > 과거의 기획 경험과 현재의 기술적 역량을 결합하여 실질적인 변화를 만드는 엔지니어가 되고자 합니다.
 
 ---
@@ -40,7 +41,8 @@ pubDate: 2026-05-13
 
 > **In Progress**
 > ![정보처리기사](https://img.shields.io/badge/정보처리기사_필기_합격-5A29E4?style=for-the-badge&logo=bookstack&logoColor=white)
-> ※ 실기 시험 준비 중 (최종 합격 시 위 섹션으로 이동 예정)
+>
+> <small>※ 실기 시험 준비 중 (최종 합격 시 위 섹션으로 이동 예정)</small>
 
 ---
 
