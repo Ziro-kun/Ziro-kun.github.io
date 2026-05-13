@@ -1,40 +1,195 @@
 ---
 import { getCollection, render } from 'astro:content';
-import PortfolioLayout from '../../layouts/PortfolioLayout.astro';
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
 
 const portfolios = await getCollection('portfolio');
 const introEntry = portfolios.find((item) => item.id === 'index');
 if (!introEntry) throw new Error('portfolio/index.md not found');
-
 const { Content } = await render(introEntry);
+
+const intelCount = portfolios.filter((p) => p.id.startsWith('intel/')).length;
+
+const categories = [
+	{
+		href: '/portfolio/intel',
+		icon: '🎓',
+		label: 'Intel Portfolio',
+		desc: 'Intel AI SW Academy 과정 중 수행한 AI/데이터 분석 프로젝트',
+		count: intelCount,
+	},
+	{
+		href: '/portfolio/mini',
+		icon: '🧪',
+		label: 'Mini Projects',
+		desc: '개인 역량 강화를 위해 진행한 소규모 토이 프로젝트 및 웹 서비스',
+		count: null,
+	},
+	{
+		href: '/portfolio/career',
+		icon: '💼',
+		label: 'Career Projects',
+		desc: '공공 SI 및 사내 솔루션 기획 등 실무 프로젝트 경력',
+		count: null,
+	},
+];
 ---
 
-<PortfolioLayout title="Portfolio | Zi-log" description={introEntry.data.description}>
-	<div class="page-header">
-		<h1>Ziro's Portfolio</h1>
-		<p class="tagline">
-			<strong>"문제 재정의와 구조적 사고를 통해 더 나은 솔루션을 설계합니다."</strong><br />
-			과거의 기획 경험과 현재의 기술적 역량을 결합하여 실질적인 변화를 만드는 엔지니어가 되고자 합니다.
-		</p>
-	</div>
-	<hr />
-	<Content />
-</PortfolioLayout>
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title="Portfolio | Zi-log" description="AI/SW Engineer Portfolio Archive" />
+		<style>
+			.category-header {
+				padding: 3rem 0 2rem;
+				text-align: center;
+			}
+			.category-header h1 {
+				font-size: 2.5rem;
+				font-weight: 800;
+				background: linear-gradient(to right, var(--accent), #fff);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				margin-bottom: 0.5rem;
+			}
+			.category-header p {
+				color: rgb(var(--gray));
+				font-size: 0.95rem;
+			}
 
-<style>
-	.page-header {
-		margin-bottom: 0;
-	}
-	.page-header h1 {
-		font-size: 2rem;
-		font-weight: 800;
-		margin: 0 0 0.75rem;
-		color: var(--accent);
-	}
-	.tagline {
-		font-size: 0.95rem;
-		line-height: 1.8;
-		color: rgb(var(--gray));
-		margin: 0;
-	}
-</style>
+			.portfolio-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+				gap: 1.5rem;
+				list-style: none;
+				padding: 0;
+				max-width: 960px;
+				margin: 0 auto 3rem;
+			}
+			.portfolio-card {
+				background: #18181b;
+				border: 1px solid #27272a;
+				border-radius: 16px;
+				overflow: hidden;
+				transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+			}
+			.portfolio-card:hover {
+				transform: translateY(-6px);
+				border-color: var(--accent);
+				box-shadow: 0 0 30px rgba(212, 255, 0, 0.1);
+			}
+			.portfolio-card a {
+				display: flex;
+				flex-direction: column;
+				padding: 1.75rem 1.5rem;
+				text-decoration: none;
+				color: inherit;
+				height: 100%;
+			}
+			.card-icon {
+				font-size: 2rem;
+				margin-bottom: 0.75rem;
+			}
+			.portfolio-card h2 {
+				font-size: 1.15rem;
+				font-weight: 700;
+				color: white;
+				margin: 0 0 0.5rem;
+				transition: color 0.2s;
+			}
+			.portfolio-card:hover h2 {
+				color: var(--accent);
+			}
+			.portfolio-card p {
+				font-size: 0.875rem;
+				color: rgb(var(--gray));
+				margin: 0 0 0.75rem;
+				line-height: 1.6;
+				flex: 1;
+			}
+			.card-count {
+				font-size: 0.8rem;
+				color: var(--accent);
+				font-weight: 600;
+			}
+
+			.portfolio-about {
+				max-width: 900px;
+				margin: 0 auto;
+				padding: 0 1.5rem 4rem;
+			}
+			.portfolio-about :global(h2) {
+				font-size: 1.4rem;
+				font-weight: 700;
+				margin: 2.5rem 0 1rem;
+				padding-bottom: 0.4rem;
+				border-bottom: 1px solid rgba(255,255,255,0.1);
+			}
+			.portfolio-about :global(ul) {
+				padding-left: 1.5rem;
+				line-height: 1.8;
+			}
+			.portfolio-about :global(li) {
+				margin: 0.3rem 0;
+			}
+			.portfolio-about :global(a) {
+				color: var(--accent);
+				text-decoration: none;
+			}
+			.portfolio-about :global(a:hover) {
+				text-decoration: underline;
+			}
+			.portfolio-about :global(blockquote) {
+				border-left: 3px solid var(--accent);
+				margin: 1rem 0;
+				padding: 0.75rem 1.25rem;
+				background: rgba(255,255,255,0.03);
+				border-radius: 0 0.5rem 0.5rem 0;
+				font-style: normal;
+			}
+			.portfolio-about :global(hr) {
+				border: none;
+				border-top: 1px solid rgba(255,255,255,0.1);
+				margin: 2rem 0;
+			}
+			.portfolio-about :global(img[src*="shields.io"]),
+			.portfolio-about :global(img[src*="img.shields"]) {
+				display: inline;
+				vertical-align: middle;
+				margin: 0 0.15rem;
+			}
+			.portfolio-about :global(small) {
+				font-size: 0.8rem;
+				color: rgb(var(--gray));
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="category-header">
+				<h1>Portfolio</h1>
+				<p>"문제 재정의와 구조적 사고를 통해 더 나은 솔루션을 설계합니다."</p>
+			</div>
+
+			<ul class="portfolio-grid">
+				{categories.map((cat) => (
+					<li class="portfolio-card">
+						<a href={cat.href}>
+							<div class="card-icon">{cat.icon}</div>
+							<h2>{cat.label}</h2>
+							<p>{cat.desc}</p>
+							{cat.count !== null && <span class="card-count">{cat.count}개 프로젝트</span>}
+						</a>
+					</li>
+				))}
+			</ul>
+
+			<div class="portfolio-about">
+				<Content />
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
