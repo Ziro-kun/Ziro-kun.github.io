@@ -57,5 +57,10 @@ pubDate: 2025-05-13
 
 # 📎 산출물
 
-- [결과보고서 (대외용) 다운로드](/portfolio/files/Capstone_Project(Organic__Recycling)_대외용.pdf)
-- [데모 보고서 다운로드](/portfolio/files/Capstone_Project3_Recynet_demo.pdf)
+**결과보고서**
+
+<iframe src="/portfolio/files/Capstone_Project(Organic__Recycling)_대외용.pdf" width="100%" height="700px" style="border:none; margin-top:0.5rem;"></iframe>
+
+**데모 보고서**
+
+<iframe src="/portfolio/files/Capstone_Project3_Recynet_demo.pdf" width="100%" height="700px" style="border:none; margin-top:0.5rem;"></iframe>

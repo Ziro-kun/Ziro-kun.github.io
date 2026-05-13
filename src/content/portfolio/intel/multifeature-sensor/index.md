@@ -97,4 +97,4 @@ title: 기기 다중 피쳐 센서 데이터 분석 - 신체활동 추적 AI 솔
 
 # 📎 산출물
 
-- [결과보고서 (대외용) 다운로드](/portfolio/files/1조_capstone_2_신체활동_추적_AI_솔루션_251217_대외용.pdf)
+<iframe src="/portfolio/files/1조_capstone_2_신체활동_추적_AI_솔루션_251217_대외용.pdf" width="100%" height="700px" style="border:none; margin-top:0.5rem;"></iframe>

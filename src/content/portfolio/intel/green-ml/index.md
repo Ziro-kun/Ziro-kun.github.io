@@ -39,5 +39,10 @@ title: Green-ML
 
 # 📎 산출물
 
-- [개발 계획서 다운로드](/portfolio/files/(Green_ML)development_plan.pdf)
-- [매뉴얼 다운로드](/portfolio/files/Green-ML MANUAL.pdf)
+**개발 계획서**
+
+<iframe src="/portfolio/files/(Green_ML)development_plan.pdf" width="100%" height="700px" style="border:none; margin-top:0.5rem;"></iframe>
+
+**매뉴얼**
+
+<iframe src="/portfolio/files/Green-ML MANUAL.pdf" width="100%" height="700px" style="border:none; margin-top:0.5rem;"></iframe>

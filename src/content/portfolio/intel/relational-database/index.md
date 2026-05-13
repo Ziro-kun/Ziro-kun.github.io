@@ -88,4 +88,4 @@ title: 관계형 데이터베이스 분석 - 매출 영향 특성 항목 찾기
 
 # 📎 산출물
 
-- [결과보고서 (대외용) 다운로드](/portfolio/files/1조_capstone_1_매출_영향_특성_항목_찾기_251209_대외용.pdf)
+<iframe src="/portfolio/files/1조_capstone_1_매출_영향_특성_항목_찾기_251209_대외용.pdf" width="100%" height="700px" style="border:none; margin-top:0.5rem;"></iframe>

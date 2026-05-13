@@ -14,11 +14,11 @@ pubDate: 2026-05-13
 ---
 
 ## 🗺️ Quick Navigation
-| 포트폴리오명 | 설명 |
-| :--- | :--- |
-| [🎓 Intel Portfolio](/portfolio/intel) | Intel AI SW Academy 과정 중 수행한 AI/데이터 분석 프로젝트 |
-| [🧪 Mini Project Portfolio](/portfolio/mini) | 개인 역량 강화를 위해 진행한 소규모 토이 프로젝트 및 웹 서비스 |
-| [💼 Project Portfolio](/portfolio/career) | 공공 SI 및 사내 솔루션 기획 등 실무 프로젝트 경력 |
+<table><tbody>
+<tr><td><a href="/portfolio/intel">🎓 Intel Portfolio</a></td><td>Intel AI SW Academy 과정 중 수행한 AI/데이터 분석 프로젝트</td></tr>
+<tr><td><a href="/portfolio/mini">🧪 Mini Project Portfolio</a></td><td>개인 역량 강화를 위해 진행한 소규모 토이 프로젝트 및 웹 서비스</td></tr>
+<tr><td><a href="/portfolio/career">💼 Project Portfolio</a></td><td>공공 SI 및 사내 솔루션 기획 등 실무 프로젝트 경력</td></tr>
+</tbody></table>
 
 ---
 
