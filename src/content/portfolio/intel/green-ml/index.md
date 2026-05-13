@@ -34,3 +34,10 @@ title: Green-ML
 
 - AI 서비스의 환경적 영향성을 직접 측정하고 시각적으로 표현함으로써 지속 가능한 개발의 중요성을 체감함
 - 프론트엔드부터 백엔드, AI 추론까지 전체 파이프라인을 연결하는 경험을 통해 프로덕트 레벨의 아키텍처 이해도를 높일 수 있었음
+
+---
+
+# 📎 산출물
+
+- [개발 계획서 다운로드](/portfolio/files/(Green_ML)development_plan.pdf)
+- [매뉴얼 다운로드](/portfolio/files/Green-ML MANUAL.pdf)

@@ -17,6 +17,3 @@ pubDate: 2025-05-13
 | [컴퓨터 비전 이미지 데이터 분석](/portfolio/intel/computer-vision) | Capstone | 유기물&폐기물 이미지 데이터 분류 및 쓰레기 분류기 프로토타입 생성 | Project 매니징, RegNet 모델 조건별 실험, 시연 프로그램 설계 | 4 | — |
 | [기기 다중 피쳐 센서 데이터 분석](/portfolio/intel/multifeature-sensor) | Capstone | 스마트폰 신체활동 데이터 분석 & 차원축소 정도 찾기 | Project 매니징, 비지도 학습 시 k=5일 경우의 특성 도출 및 시각화 | 4 | — |
 | [관계형 데이터베이스 분석](/portfolio/intel/relational-database) | Capstone | ROSSMANN 브랜드 sales 예측 및 매출 증가 방법 모색 | Project 매니징, 데이터 전처리, 날짜기반 파생 변수 Insight 도출 | 4 | — |
-| [머신러닝 활용 서비스 기획](/portfolio/intel/ml-service) | Side | Design Thinking 기반 머신러닝 활용 서비스 기획 및 발표 | Project 매니징, 기술 및 서비스 구체화, prototype 아키텍처 작성 | 3 | — |
-| [교육 분야에서의 AI 혁신과 미래](/portfolio/intel/education-ai) | Side | 산업현장 AI 적용 사례 조사 및 발표 | 교육 분야에서 활용되는 AI 기술 정리 | 5 | — |
-| [RAG & Fine-tuning](/portfolio/intel/rag-fine-tuning) | Side | RAG와 Fine-tuning의 차이점 비교 | 전반적인 기술 브리핑, RAG 관련 논문 탐색 | 5 | — |

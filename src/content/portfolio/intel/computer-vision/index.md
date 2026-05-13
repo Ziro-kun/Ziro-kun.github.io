@@ -52,3 +52,10 @@ pubDate: 2025-05-13
 - 전이학습 모델을 다중 모델 비교 관점에서 경험하며 파이프라인 구조에 대한 이해가 깊어짐
 - 비전 모델에서는 단순 정확도보다 **데이터 특성·전처리·학습 안정성**이 중요함을 체감
 - 실험 과정의 논리·설명 가능성·스토리텔링을 더 강화할 계획
+
+---
+
+# 📎 산출물
+
+- [결과보고서 (대외용) 다운로드](/portfolio/files/Capstone_Project(Organic__Recycling)_대외용.pdf)
+- [데모 보고서 다운로드](/portfolio/files/Capstone_Project3_Recynet_demo.pdf)
