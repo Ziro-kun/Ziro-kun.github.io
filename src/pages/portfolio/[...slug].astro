@@ -1,0 +1,123 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import AboutLayout from '../../layouts/AboutLayout.astro';
+
+export async function getStaticPaths() {
+	const portfolios = await getCollection('portfolio');
+	return portfolios
+		.filter((item) => item.id.includes('/'))
+		.map((item) => ({
+			params: { slug: item.id },
+			props: { item },
+		}));
+}
+
+interface Props {
+	item: CollectionEntry<'portfolio'>;
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+---
+
+<AboutLayout title={item.data.title} description={item.data.description} heroImage={item.data.heroImage}>
+	<article class="portfolio-post">
+		<div class="portfolio-meta">
+			{item.data.type && <span class="type-badge">{item.data.type}</span>}
+			{item.data.role && <p><strong>역할:</strong> {item.data.role}</p>}
+			{item.data.teamSize && <p><strong>팀원:</strong> {item.data.teamSize}</p>}
+		</div>
+
+		<div class="portfolio-content">
+			<Content />
+		</div>
+
+		<div class="portfolio-links">
+			{item.data.github && (
+				<a href={item.data.github} target="_blank" rel="noopener noreferrer" class="link-btn github">
+					💻 GitHub
+				</a>
+			)}
+			{item.data.link && (
+				<a href={item.data.link} target="_blank" rel="noopener noreferrer" class="link-btn">
+					🔗 프로젝트 보기
+				</a>
+			)}
+		</div>
+	</article>
+</AboutLayout>
+
+<style>
+	.portfolio-post {
+		max-width: 800px;
+		margin: 2rem auto;
+	}
+
+	.portfolio-meta {
+		background: var(--color-bg-secondary);
+		padding: 1.5rem;
+		border-radius: 0.5rem;
+		margin-bottom: 2rem;
+	}
+
+	.type-badge {
+		display: inline-block;
+		background: var(--color-accent);
+		color: white;
+		padding: 0.25rem 0.75rem;
+		border-radius: 0.25rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+
+	.portfolio-meta p {
+		margin: 0.5rem 0;
+		color: var(--color-text-secondary);
+	}
+
+	.portfolio-content {
+		line-height: 1.6;
+		color: var(--color-text);
+	}
+
+	.portfolio-content :global(h1),
+	.portfolio-content :global(h2),
+	.portfolio-content :global(h3) {
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.portfolio-content :global(h1:first-child) {
+		margin-top: 0;
+	}
+
+	.portfolio-links {
+		display: flex;
+		gap: 1rem;
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.link-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		background: var(--color-accent);
+		color: white;
+		text-decoration: none;
+		border-radius: 0.5rem;
+		font-weight: 600;
+		transition: opacity 0.2s;
+	}
+
+	.link-btn:hover {
+		opacity: 0.9;
+	}
+
+	.link-btn.github {
+		background: #333;
+	}
+</style>
