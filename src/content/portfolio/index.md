@@ -40,6 +40,7 @@ pubDate: 2026-05-13
 > ![AWS](https://img.shields.io/badge/AWS_Certified_Cloud_Practitioner-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white) ![ADsP](https://img.shields.io/badge/ADsP_데이터분석준전문가-3498DB?style=for-the-badge&logo=google-analytics&logoColor=white)
 
 > **In Progress**
+>
 > ![정보처리기사](https://img.shields.io/badge/정보처리기사_필기_합격-5A29E4?style=for-the-badge&logo=bookstack&logoColor=white)
 >
 > <small>※ 실기 시험 준비 중 (최종 합격 시 위 섹션으로 이동 예정)</small>
