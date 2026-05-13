@@ -1,0 +1,148 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<html lang="ko">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="portfolio-wrapper">
+				<slot />
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	main {
+		flex: 1;
+		padding: 2rem 1.5rem 4rem;
+	}
+
+	.portfolio-wrapper {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+	.portfolio-wrapper :global(h1) {
+		font-size: 2rem;
+		font-weight: 800;
+		margin: 0 0 0.5rem;
+		color: var(--accent);
+	}
+
+	.portfolio-wrapper :global(h2) {
+		font-size: 1.4rem;
+		font-weight: 700;
+		margin: 2.5rem 0 1rem;
+		padding-bottom: 0.4rem;
+		border-bottom: 1px solid rgba(255,255,255,0.1);
+	}
+
+	.portfolio-wrapper :global(h3) {
+		font-size: 1.1rem;
+		font-weight: 600;
+		margin: 1.5rem 0 0.5rem;
+	}
+
+	.portfolio-wrapper :global(p) {
+		line-height: 1.8;
+		margin: 0.75rem 0;
+		word-break: keep-all;
+	}
+
+	.portfolio-wrapper :global(ul),
+	.portfolio-wrapper :global(ol) {
+		padding-left: 1.5rem;
+		line-height: 1.8;
+	}
+
+	.portfolio-wrapper :global(li) {
+		margin: 0.3rem 0;
+	}
+
+	.portfolio-wrapper :global(a) {
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.portfolio-wrapper :global(a:hover) {
+		text-decoration: underline;
+	}
+
+	.portfolio-wrapper :global(blockquote) {
+		border-left: 3px solid var(--accent);
+		margin: 1rem 0;
+		padding: 0.75rem 1.25rem;
+		background: rgba(255,255,255,0.03);
+		border-radius: 0 0.5rem 0.5rem 0;
+		font-style: normal;
+	}
+
+	.portfolio-wrapper :global(table) {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 1.5rem 0;
+		font-size: 0.9rem;
+		overflow-x: auto;
+		display: block;
+	}
+
+	.portfolio-wrapper :global(th) {
+		background: rgba(255,255,255,0.07);
+		padding: 0.6rem 0.8rem;
+		text-align: left;
+		font-weight: 600;
+		border-bottom: 2px solid rgba(255,255,255,0.15);
+		white-space: nowrap;
+	}
+
+	.portfolio-wrapper :global(td) {
+		padding: 0.6rem 0.8rem;
+		border-bottom: 1px solid rgba(255,255,255,0.07);
+		vertical-align: top;
+	}
+
+	.portfolio-wrapper :global(tr:hover td) {
+		background: rgba(255,255,255,0.03);
+	}
+
+	.portfolio-wrapper :global(hr) {
+		border: none;
+		border-top: 1px solid rgba(255,255,255,0.1);
+		margin: 2rem 0;
+	}
+
+	.portfolio-wrapper :global(code) {
+		background: rgba(255,255,255,0.08);
+		padding: 0.15rem 0.4rem;
+		border-radius: 0.25rem;
+		font-size: 0.875rem;
+	}
+
+	.portfolio-wrapper :global(img[src*="shields.io"]),
+	.portfolio-wrapper :global(img[src*="img.shields"]) {
+		display: inline;
+		vertical-align: middle;
+		margin: 0 0.15rem;
+	}
+
+	@media (max-width: 640px) {
+		.portfolio-wrapper :global(h1) {
+			font-size: 1.6rem;
+		}
+	}
+</style>

@@ -1,6 +1,6 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
-import AboutLayout from '../../layouts/AboutLayout.astro';
+import PortfolioLayout from '../../layouts/PortfolioLayout.astro';
 
 export async function getStaticPaths() {
 	const portfolios = await getCollection('portfolio');
@@ -18,21 +18,30 @@ interface Props {
 
 const { item } = Astro.props;
 const { Content } = await render(item);
+
+const categoryPath = item.id.split('/')[0];
+const categoryLabel: Record<string, string> = {
+	intel: 'Intel Projects',
+	mini: 'Mini Projects',
+	career: 'Career Projects',
+};
 ---
 
-<AboutLayout title={item.data.title} description={item.data.description} heroImage={item.data.heroImage}>
-	<article class="portfolio-post">
-		<div class="portfolio-meta">
-			{item.data.type && <span class="type-badge">{item.data.type}</span>}
-			{item.data.role && <p><strong>역할:</strong> {item.data.role}</p>}
-			{item.data.teamSize && <p><strong>팀원:</strong> {item.data.teamSize}</p>}
-		</div>
+<PortfolioLayout title={`${item.data.title} | Portfolio`} description={item.data.description}>
+	<nav class="breadcrumb">
+		<a href="/portfolio">Portfolio</a> /
+		<a href={`/portfolio/${categoryPath}`}>{categoryLabel[categoryPath] ?? categoryPath}</a> /
+		{item.data.title}
+	</nav>
 
-		<div class="portfolio-content">
-			<Content />
+	<div class="project-header">
+		<h1>{item.data.title}</h1>
+		<div class="meta-row">
+			{item.data.type && <span class="badge">{item.data.type}</span>}
+			{item.data.teamSize && <span class="meta-item">👥 {item.data.teamSize}명</span>}
 		</div>
-
-		<div class="portfolio-links">
+		{item.data.role && <p class="role-text">역할: {item.data.role}</p>}
+		<div class="link-row">
 			{item.data.github && (
 				<a href={item.data.github} target="_blank" rel="noopener noreferrer" class="link-btn github">
 					💻 GitHub
@@ -44,80 +53,96 @@ const { Content } = await render(item);
 				</a>
 			)}
 		</div>
-	</article>
-</AboutLayout>
+	</div>
+
+	<hr />
+
+	<div class="project-content">
+		<Content />
+	</div>
+</PortfolioLayout>
 
 <style>
-	.portfolio-post {
-		max-width: 800px;
-		margin: 2rem auto;
-	}
-
-	.portfolio-meta {
-		background: var(--color-bg-secondary);
-		padding: 1.5rem;
-		border-radius: 0.5rem;
+	.breadcrumb {
+		font-size: 0.875rem;
+		color: var(--gray);
 		margin-bottom: 2rem;
 	}
+	.breadcrumb a {
+		color: var(--accent);
+		text-decoration: none;
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
 
-	.type-badge {
-		display: inline-block;
-		background: var(--color-accent);
-		color: white;
-		padding: 0.25rem 0.75rem;
-		border-radius: 0.25rem;
-		font-size: 0.875rem;
-		font-weight: 600;
+	.project-header {
+		margin-bottom: 1.5rem;
+	}
+
+	.project-header h1 {
+		font-size: 1.8rem;
+		margin: 0 0 0.75rem;
+	}
+
+	.meta-row {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
 		margin-bottom: 0.5rem;
 	}
 
-	.portfolio-meta p {
-		margin: 0.5rem 0;
-		color: var(--color-text-secondary);
+	.badge {
+		display: inline-block;
+		background: var(--accent);
+		color: #000;
+		padding: 0.2rem 0.65rem;
+		border-radius: 0.25rem;
+		font-size: 0.8rem;
+		font-weight: 700;
 	}
 
-	.portfolio-content {
-		line-height: 1.6;
-		color: var(--color-text);
+	.meta-item {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
 	}
 
-	.portfolio-content :global(h1),
-	.portfolio-content :global(h2),
-	.portfolio-content :global(h3) {
-		margin-top: 2rem;
-		margin-bottom: 1rem;
+	.role-text {
+		font-size: 0.9rem;
+		color: rgb(var(--gray));
+		margin: 0.5rem 0 0;
 	}
 
-	.portfolio-content :global(h1:first-child) {
-		margin-top: 0;
-	}
-
-	.portfolio-links {
+	.link-row {
 		display: flex;
-		gap: 1rem;
-		margin-top: 2rem;
-		padding-top: 2rem;
-		border-top: 1px solid var(--color-border);
+		gap: 0.75rem;
+		margin-top: 1rem;
+		flex-wrap: wrap;
 	}
 
 	.link-btn {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
-		padding: 0.75rem 1.5rem;
-		background: var(--color-accent);
+		gap: 0.4rem;
+		padding: 0.5rem 1.1rem;
+		background: rgba(255,255,255,0.08);
+		border: 1px solid rgba(255,255,255,0.15);
 		color: white;
 		text-decoration: none;
-		border-radius: 0.5rem;
-		font-weight: 600;
-		transition: opacity 0.2s;
+		border-radius: 0.375rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		transition: background 0.2s;
 	}
-
 	.link-btn:hover {
-		opacity: 0.9;
+		background: rgba(255,255,255,0.14);
+	}
+	.link-btn.github {
+		border-color: rgba(255,255,255,0.2);
 	}
 
-	.link-btn.github {
-		background: #333;
+	.project-content {
+		line-height: 1.8;
 	}
 </style>

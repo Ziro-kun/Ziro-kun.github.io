@@ -1,0 +1,32 @@
+---
+import { getCollection, render } from 'astro:content';
+import PortfolioLayout from '../../../layouts/PortfolioLayout.astro';
+
+const portfolios = await getCollection('portfolio');
+const entry = portfolios.find((item) => item.id === 'mini');
+if (!entry) throw new Error('portfolio mini index not found');
+
+const { Content } = await render(entry);
+---
+
+<PortfolioLayout title="Mini Projects | Portfolio" description={entry.data.description}>
+	<nav class="breadcrumb">
+		<a href="/portfolio">Portfolio</a> / Mini & Personal Projects
+	</nav>
+	<Content />
+</PortfolioLayout>
+
+<style>
+	.breadcrumb {
+		font-size: 0.875rem;
+		color: var(--gray);
+		margin-bottom: 1.5rem;
+	}
+	.breadcrumb a {
+		color: var(--accent);
+		text-decoration: none;
+	}
+	.breadcrumb a:hover {
+		text-decoration: underline;
+	}
+</style>
