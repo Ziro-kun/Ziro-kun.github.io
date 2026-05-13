@@ -6,23 +6,20 @@ pubDate: 2026-05-13
 
 # 🚀 Welcome to Ziro's Archive
 
-
-> **Digital Planner ➔ AI/SW Engineer**
 > **"문제 재정의와 구조적 사고를 통해 더 나은 솔루션을 설계합니다."**
 > 과거의 기획 경험과 현재의 기술적 역량을 결합하여 실질적인 변화를 만드는 엔지니어가 되고자 합니다.
 
 ---
 
 ## 🗺️ Quick Navigation
-<table><tbody>
-<tr><td><a href="/portfolio/intel">🎓 Intel Portfolio</a></td><td>Intel AI SW Academy 과정 중 수행한 AI/데이터 분석 프로젝트</td></tr>
-<tr><td><a href="/portfolio/mini">🧪 Mini Project Portfolio</a></td><td>개인 역량 강화를 위해 진행한 소규모 토이 프로젝트 및 웹 서비스</td></tr>
-<tr><td><a href="/portfolio/career">💼 Project Portfolio</a></td><td>공공 SI 및 사내 솔루션 기획 등 실무 프로젝트 경력</td></tr>
-</tbody></table>
+
+- [🎓 Intel Portfolio](/portfolio/intel) — Intel AI SW Academy 과정 중 수행한 AI/데이터 분석 프로젝트
+- [🧪 Mini Project Portfolio](/portfolio/mini) — 개인 역량 강화를 위해 진행한 소규모 토이 프로젝트 및 웹 서비스
+- [💼 Project Portfolio](/portfolio/career) — 공공 SI 및 사내 솔루션 기획 등 실무 프로젝트 경력
 
 ---
 
-## 🛠 Tech Stack (Enhanced) 
+## 🛠 Tech Stack (Enhanced)
 
 - **Languages** &nbsp; ![Python](https://img.shields.io/badge/Python-000000?style=flat-square&logo=python&logoColor=white) ![Java](https://img.shields.io/badge/Java-000000?style=flat-square&logo=openjdk&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-000000?style=flat-square&logo=javascript&logoColor=white)
 - **Backend & Frameworks** &nbsp; ![FastAPI](https://img.shields.io/badge/FastAPI-000000?style=flat-square&logo=fastapi&logoColor=white) ![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white) ![Django](https://img.shields.io/badge/Django-000000?style=flat-square&logo=django&logoColor=white) ![Streamlit](https://img.shields.io/badge/Streamlit-000000?style=flat-square&logo=streamlit&logoColor=white) ![Ngrok](https://img.shields.io/badge/Ngrok-000000?style=flat-square&logo=ngrok&logoColor=white)
@@ -38,7 +35,7 @@ pubDate: 2026-05-13
 ## 🏆 Certifications & Credentials
 
 > **Professional Certifications**
-> 
+>
 > ![AWS](https://img.shields.io/badge/AWS_Certified_Cloud_Practitioner-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white) ![ADsP](https://img.shields.io/badge/ADsP_데이터분석준전문가-3498DB?style=for-the-badge&logo=google-analytics&logoColor=white)
 
 > **In Progress**
@@ -47,22 +44,7 @@ pubDate: 2026-05-13
 
 ---
 
-## 🖥️ My Hybrid Workspace
-> 주어진 자원을 최대한 활용한 멀티 OS 환경입니다.
-
-| Device | OS | Role | Tech Highlights |
-| :--- | :--- | :--- | :--- |
-| **MacBook Air** | `macOS` | **Main Dev** | M4 (10-core) / 16GB / 512GB |
-| **Asus Zenbook** | `Linux` | **Testing** | OpenClaw, Syncthing, Tailscale |
-| **Desktop** | `Windows` | **Docs/Gaming** | Chrome Remote Desktop |
-
----
-
 ## 🔗 Connection
+
 - 📧 [Email](mailto:polly.saids@gmail.com)
-- 📝 [Blog](https://velog.io/@applez/)
-- 🐙 [GitHub](https://github.com/Ziro-kun) 
-
----
-
-[![Hits](https://hits.sh/publish.obsidian.md/ziro.svg)](https://hits.sh/publish.obsidian.md/ziro/)
+- 🐙 [GitHub](https://github.com/Ziro-kun)
