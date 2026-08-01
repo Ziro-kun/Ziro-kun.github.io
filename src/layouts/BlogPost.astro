@@ -4,8 +4,6 @@ import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Comments from '../components/Comments.astro';
-import LikeButton from '../components/LikeButton.astro';
 import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & {
@@ -396,9 +394,6 @@ const tocHeadings = headings.filter((h) => h.depth === 1 || h.depth === 2);
 						</div>
 					)}
 
-					<LikeButton />
-
-					<Comments />
 				</article>
 
 				<!-- TOC -->

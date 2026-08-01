@@ -17,6 +17,12 @@ pnpm-debug.log*
 .env
 .env.production
 
+# supabase backups (contains DB data, must not be public)
+supabase_backup/
+
+# supabase CLI local state (contains pooler connection string/credentials)
+supabase/
+
 # macOS-specific files
 .DS_Store
 
